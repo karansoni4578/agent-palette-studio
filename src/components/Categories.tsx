@@ -7,28 +7,28 @@ const categories = [
     name: "Chat",
     icon: MessageCircle,
     description: "Conversational AI agents",
-    count: 124,
+    count: 9,
     color: "bg-primary/10 text-primary"
   },
   {
     name: "Writing",
     icon: PenTool,
     description: "Content creation tools",
-    count: 89,
+    count: 8,
     color: "bg-primary/10 text-primary"
   },
   {
     name: "Coding",
     icon: Code,
     description: "Development assistants",
-    count: 156,
+    count: 8,
     color: "bg-primary/10 text-primary"
   },
   {
     name: "Automation",
     icon: Zap,
     description: "Workflow automation",
-    count: 78,
+    count: 8,
     color: "bg-primary/10 text-primary"
   }
 ];
@@ -37,10 +37,22 @@ const Categories = () => {
   const navigate = useNavigate();
 
   const handleCategoryClick = (categoryName: string) => {
-    if (categoryName === "Chat") {
+    switch (categoryName) {
+      case "Chat":
       navigate("/category/chat");
+        break;
+      case "Writing":
+        navigate("/category/writing");
+        break;
+      case "Coding":
+        navigate("/category/coding");
+        break;
+      case "Automation":
+        navigate("/category/automation");
+        break;
+      default:
+        break;
     }
-    // Add more category routes as needed
   };
 
   return (
