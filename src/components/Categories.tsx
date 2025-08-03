@@ -1,5 +1,6 @@
 import { MessageCircle, PenTool, Code, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   {
@@ -33,6 +34,15 @@ const categories = [
 ];
 
 const Categories = () => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryName: string) => {
+    if (categoryName === "Chat") {
+      navigate("/category/chat");
+    }
+    // Add more category routes as needed
+  };
+
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -52,6 +62,7 @@ const Categories = () => {
               <div
                 key={category.name}
                 className="group bg-card rounded-2xl p-8 text-center border border-border hover-lift cursor-pointer card-shadow hover:card-shadow-hover"
+                onClick={() => handleCategoryClick(category.name)}
               >
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6 group-hover:bg-primary/20 transition-colors">
                   <IconComponent className="w-8 h-8 text-primary" />
