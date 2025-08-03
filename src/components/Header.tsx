@@ -14,13 +14,13 @@ const Header = () => {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
+            <a href="/" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
               Home
             </a>
             <a href="#" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
               Categories
             </a>
-            <a href="#" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
+            <a href="/submit" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
               Submit Agent
             </a>
             <a href="#" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
@@ -29,7 +29,10 @@ const Header = () => {
           </div>
 
           {/* CTA Button */}
-          <Button className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+          <Button 
+            className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+            onClick={() => window.location.href = '/submit'}
+          >
             Submit Your Agent
           </Button>
 
