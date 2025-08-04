@@ -9,6 +9,7 @@ import CategoryListing from "./pages/CategoryListing";
 import WritingListing from "./pages/WritingListing";
 import CodingListing from "./pages/CodingListing";
 import AutomationListing from "./pages/AutomationListing";
+import ExploreCategories from "./pages/ExploreCategories";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/submit" element={<SubmitAgent />} />
+          <Route path="/categories" element={<ExploreCategories />} />
           <Route path="/category/chat" element={<CategoryListing />} />
           <Route path="/category/writing" element={<WritingListing />} />
           <Route path="/category/coding" element={<CodingListing />} />
