@@ -12,6 +12,7 @@ interface AgentCardProps {
   isAgentOfTheDay?: boolean;
   isFree?: boolean;
   hasAPI?: boolean;
+  websiteUrl?: string;
 }
 
 const AgentCard = ({ 
@@ -23,10 +24,20 @@ const AgentCard = ({
   users, 
   isAgentOfTheDay = false,
   isFree = false,
-  hasAPI = false 
+  hasAPI = false,
+  websiteUrl
 }: AgentCardProps) => {
+
+  const handleClick = () => {
+    if (websiteUrl) {
+      window.open(websiteUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
   return (
-    <div className="group bg-card rounded-2xl p-6 border border-border hover-lift cursor-pointer card-shadow hover:card-shadow-hover relative">
+    <div 
+      className="group bg-card rounded-2xl p-6 border border-border hover-lift cursor-pointer card-shadow hover:card-shadow-hover relative"
+      onClick={handleClick}
+    >
       {/* Agent of the Day Badge */}
       {isAgentOfTheDay && (
         <div className="absolute -top-3 -right-3">
@@ -83,7 +94,7 @@ const AgentCard = ({
 
       {/* CTA Button */}
       <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-        Get Details
+        Visit Website →
       </Button>
     </div>
   );
