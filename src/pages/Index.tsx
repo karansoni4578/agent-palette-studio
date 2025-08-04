@@ -11,16 +11,16 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate initial app load time
+    // Shorter, more realistic loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
 
   if (isLoading) {
-    return <LoadingScreen message="Welcome to AI Agent Zone" />;
+    return <LoadingScreen />;
   }
 
   return (
