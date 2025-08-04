@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AgentCard from "./AgentCard";
+import LoadingScreen from "./LoadingScreen";
 import { getTrendingAgents, initializeAgentsData, type Agent } from "@/lib/supabase";
 import { Skeleton } from "@/components/ui/skeleton";
 
