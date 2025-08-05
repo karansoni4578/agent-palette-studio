@@ -16,7 +16,9 @@ import {
   Scale, 
   Heart, 
   Beaker, 
-  Users 
+  Users,
+  BarChart3,
+  Shield
 } from "lucide-react";
 
 interface Category {
