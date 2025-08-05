@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BrowseCategories from "@/components/BrowseCategories";
-import AgentGrid from "@/components/AgentGrid";
+import TrendingAgents from "@/components/TrendingAgents";
 import Footer from "@/components/Footer";
 import FloatingActionButton from "@/components/FloatingActionButton";
 import LoadingScreen from "@/components/LoadingScreen";
@@ -28,7 +28,7 @@ const Index = () => {
       <Header />
       <Hero />
       <BrowseCategories />
-      <AgentGrid />
+      <TrendingAgents />
       <Footer />
       <FloatingActionButton />
     </div>
