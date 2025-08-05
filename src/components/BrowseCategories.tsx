@@ -40,82 +40,82 @@ const allCategories: Category[] = [
     route: "/category/writing"
   },
   {
+    name: "Image & Design",
+    description: "AI-powered image generation and design tools",
+    icon: Palette,
+    route: "/category/image-design"
+  },
+  {
     name: "Coding & Developer Tools",
     description: "AI assistants for programming and debugging",
     icon: Code,
     route: "/category/coding"
   },
   {
-    name: "Image & Design",
-    description: "AI-powered image generation and design tools",
-    icon: Palette,
-    route: "/category/design"
-  },
-  {
-    name: "Video & Animation",
-    description: "AI video creation and animation platforms",
-    icon: Video,
-    route: "/category/video"
+    name: "Productivity & Workflow",
+    description: "Automation tools to streamline tasks and boost efficiency",
+    icon: Zap,
+    route: "/category/productivity"
   },
   {
     name: "Voice & Audio",
     description: "Speech synthesis and audio processing tools",
     icon: Mic,
-    route: "/category/voice"
+    route: "/category/voice-audio"
   },
   {
-    name: "APIs & Hosted Models",
-    description: "Machine learning models and development APIs",
-    icon: Settings,
-    route: "/category/apis"
+    name: "Video & Animation",
+    description: "AI video creation and animation platforms",
+    icon: Video,
+    route: "/category/video-animation"
   },
   {
-    name: "SEO & Marketing",
-    description: "AI tools for digital marketing and growth",
-    icon: Megaphone,
-    route: "/category/marketing"
-  },
-  {
-    name: "Productivity",
-    description: "Workflow automation and efficiency tools",
-    icon: Zap,
-    route: "/category/automation"
+    name: "Data & Analytics",
+    description: "AI-driven insights and data visualization",
+    icon: BarChart3,
+    route: "/category/data-analytics"
   },
   {
     name: "Finance & Crypto",
     description: "Trading bots and financial analysis tools",
     icon: DollarSign,
-    route: "/category/finance"
+    route: "/category/finance-crypto"
   },
   {
     name: "Education & Learning",
     description: "AI tutors and personalized learning platforms",
     icon: GraduationCap,
-    route: "/category/education"
+    route: "/category/education-learning"
   },
   {
-    name: "Legal & Compliance",
-    description: "AI for legal document analysis and compliance",
-    icon: Scale,
-    route: "/category/legal"
+    name: "Marketing & SEO",
+    description: "AI tools for digital marketing and growth",
+    icon: Megaphone,
+    route: "/category/marketing-seo"
   },
   {
-    name: "Healthcare",
+    name: "Healthcare & Wellness",
     description: "Medical AI and wellness optimization tools",
     icon: Heart,
-    route: "/category/healthcare"
+    route: "/category/healthcare-wellness"
   },
   {
-    name: "Research & AGI",
+    name: "Developer APIs & Models",
+    description: "Machine learning models and development APIs",
+    icon: Settings,
+    route: "/category/developer-apis"
+  },
+  {
+    name: "Security & Legal",
+    description: "AI for cybersecurity and legal document analysis",
+    icon: Shield,
+    route: "/category/security-legal"
+  },
+  {
+    name: "Experimental & Research Projects",
     description: "Cutting-edge AI research and experimental tools",
     icon: Beaker,
-    route: "/category/research"
-  },
-  {
-    name: "Open Source / Community Tools",
-    description: "Community-driven AI tools and frameworks",
-    icon: Users,
-    route: "/category/opensource"
+    route: "/category/experimental-research"
   }
 ];
 
