@@ -3,6 +3,42 @@ import AgentCard from "./AgentCard";
 import LoadingScreen from "./LoadingScreen";
 import { getTrendingAgents, initializeAgentsData, type Agent } from "@/lib/supabase";
 import { Skeleton } from "@/components/ui/skeleton";
+import { 
+  MessageCircle, 
+  PenTool, 
+  Code, 
+  Palette, 
+  Video, 
+  Mic, 
+  Settings, 
+  Megaphone, 
+  Zap, 
+  DollarSign, 
+  GraduationCap, 
+  Scale, 
+  Heart, 
+  Beaker, 
+  Users 
+} from "lucide-react";
+
+// Category mapping with icons
+const categoryIcons: { [key: string]: React.ComponentType<{ className?: string }> } = {
+  'chat': MessageCircle,
+  'writing': PenTool,
+  'coding': Code,
+  'design': Palette,
+  'video': Video,
+  'voice': Mic,
+  'apis': Settings,
+  'marketing': Megaphone,
+  'automation': Zap,
+  'finance': DollarSign,
+  'education': GraduationCap,
+  'legal': Scale,
+  'healthcare': Heart,
+  'research': Beaker,
+  'opensource': Users
+};
 
 const AgentGrid = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
@@ -41,6 +77,21 @@ const AgentGrid = () => {
     }
   });
 
+  // Group agents by category
+  const agentsByCategory = filteredAgents.reduce((acc, agent) => {
+    const category = agent.category || 'other';
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(agent);
+    return acc;
+  }, {} as { [key: string]: Agent[] });
+
+  // Sort categories by number of agents (descending)
+  const sortedCategories = Object.entries(agentsByCategory)
+    .sort(([, a], [, b]) => b.length - a.length)
+    .slice(0, 6); // Show top 6 categories with most agents
+
   const formatAgentForCard = (agent: Agent) => ({
     name: agent.name,
     description: agent.description,
@@ -60,10 +111,10 @@ const AgentGrid = () => {
         <div className="flex items-center justify-between mb-12">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Trending AI Agents
+              AI Agents by Category
             </h2>
             <p className="text-lg text-muted-foreground">
-              Discover the top 10 trending AI tools based on current popularity and usage
+              Discover trending AI tools organized by their use cases and categories
             </p>
           </div>
           
@@ -113,34 +164,69 @@ const AgentGrid = () => {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="bg-card rounded-xl p-6 space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Skeleton className="h-12 w-12 rounded-lg" />
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-24" />
-                  </div>
+          <div className="space-y-12">
+            {Array.from({ length: 3 }).map((_, categoryIndex) => (
+              <div key={categoryIndex} className="space-y-6">
+                <div className="flex items-center space-x-3 mb-6">
+                  <Skeleton className="h-8 w-8 rounded-lg" />
+                  <Skeleton className="h-6 w-40" />
                 </div>
-                <Skeleton className="h-16 w-full" />
-                <div className="flex space-x-2">
-                  <Skeleton className="h-6 w-16" />
-                  <Skeleton className="h-6 w-20" />
-                  <Skeleton className="h-6 w-14" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {Array.from({ length: 3 }).map((_, agentIndex) => (
+                    <div key={agentIndex} className="bg-card rounded-xl p-6 space-y-4">
+                      <div className="flex items-center space-x-3">
+                        <Skeleton className="h-12 w-12 rounded-lg" />
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-32" />
+                          <Skeleton className="h-3 w-24" />
+                        </div>
+                      </div>
+                      <Skeleton className="h-16 w-full" />
+                      <div className="flex space-x-2">
+                        <Skeleton className="h-6 w-16" />
+                        <Skeleton className="h-6 w-20" />
+                        <Skeleton className="h-6 w-14" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAgents.map((agent) => (
-                <AgentCard key={agent.id} {...formatAgentForCard(agent)} />
-              ))}
-            </div>
-
-            {filteredAgents.length === 0 && (
+            {sortedCategories.length > 0 ? (
+              <div className="space-y-12">
+                {sortedCategories.map(([category, categoryAgents]) => {
+                  const IconComponent = categoryIcons[category] || Settings;
+                  const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+                  
+                  return (
+                    <div key={category} className="space-y-6">
+                      {/* Category Header */}
+                      <div className="flex items-center space-x-3 mb-6">
+                        <div className="p-2 rounded-lg bg-primary/10">
+                          <IconComponent className="w-6 h-6 text-primary" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-foreground">
+                          {categoryName}
+                        </h3>
+                        <span className="text-sm text-muted-foreground">
+                          ({categoryAgents.length} agents)
+                        </span>
+                      </div>
+                      
+                      {/* Category Agents Grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {categoryAgents.slice(0, 3).map((agent) => (
+                          <AgentCard key={agent.id} {...formatAgentForCard(agent)} />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
               <div className="text-center py-12">
                 <p className="text-muted-foreground">No agents found matching your filter criteria.</p>
               </div>
@@ -151,7 +237,7 @@ const AgentGrid = () => {
               <button 
                 onClick={async () => {
                   setLoading(true);
-                  const trendingAgents = await getTrendingAgents(10);
+                  const trendingAgents = await getTrendingAgents(20);
                   setAgents(trendingAgents);
                   setLoading(false);
                 }}

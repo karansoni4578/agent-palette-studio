@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Categories from "@/components/Categories";
 import BrowseCategories from "@/components/BrowseCategories";
 import AgentGrid from "@/components/AgentGrid";
 import Footer from "@/components/Footer";
@@ -28,7 +27,6 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <Hero />
-      <Categories />
       <BrowseCategories />
       <AgentGrid />
       <Footer />
