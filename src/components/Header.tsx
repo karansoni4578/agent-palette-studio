@@ -66,6 +66,14 @@ const Header = () => {
             </a>
           </div>
 
+          {/* CTA Button */}
+          <Button 
+            className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+            onClick={() => window.location.href = '/submit'}
+          >
+            Submit Your Agent
+          </Button>
+
           {/* Mobile Menu Button */}
           <Button variant="outline" size="sm" className="md:hidden">
             Menu
