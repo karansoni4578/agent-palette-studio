@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Search } from "lucide-react";
+import SearchModal from "./SearchModal";
 
 interface Agent {
   id: number;
@@ -178,6 +179,7 @@ const allAgents: Agent[] = [
 const TrendingAgents = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const [showMore, setShowMore] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const filters = ["All", "Free", "API Available", "Chatbots", "Dev Tools", "Open Source"];
 
@@ -309,13 +311,32 @@ const TrendingAgents = () => {
 
         {/* CTA Section */}
         <div className="text-center">
-          <div className="inline-flex items-center bg-[#F97316] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#EA580C] transition-colors duration-300 cursor-pointer">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <div 
+              className="inline-flex items-center bg-[#F97316] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#EA580C] transition-colors duration-300 cursor-pointer"
+              onClick={() => window.location.href = '/submit'}
+            >
+              <span style={{ fontFamily: 'Poppins, sans-serif' }}>
+                → Want your tool featured here? Submit It
+              </span>
+            </div>
+            <div 
+              className="inline-flex items-center bg-white border-2 border-[#F97316] text-[#F97316] px-6 py-3 rounded-xl font-semibold hover:bg-[#F97316] hover:text-white transition-colors duration-300 cursor-pointer"
+              onClick={() => setIsSearchModalOpen(true)}
+            >
+              <Search className="w-4 h-4 mr-2" />
             <span style={{ fontFamily: 'Poppins, sans-serif' }}>
-              → Want your tool featured here? Submit It
+                Search All Tools
             </span>
+          </div>
           </div>
         </div>
       </div>
+      
+      <SearchModal 
+        isOpen={isSearchModalOpen} 
+        onClose={() => setIsSearchModalOpen(false)} 
+      />
     </section>
   );
 };

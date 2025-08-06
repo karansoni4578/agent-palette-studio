@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
+import { useState } from "react";
+import SearchModal from "./SearchModal";
 import logo from "@/assets/logo.png";
 
 const Header = () => {
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+
   const categories = [
     { name: "Chat & Conversation", href: "/category/chat" },
     { name: "Writing & Content", href: "/category/writing" },
@@ -58,6 +62,14 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Search Button */}
+            <button
+              onClick={() => setIsSearchModalOpen(true)}
+              className="flex items-center text-foreground hover:text-primary orange-underline transition-colors font-medium"
+            >
+              <Search className="w-4 h-4 mr-1" />
+              Search
+            </button>
             <a href="/blogs" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
               Blogs
             </a>
@@ -80,6 +92,11 @@ const Header = () => {
           </Button>
         </div>
       </nav>
+      
+      <SearchModal 
+        isOpen={isSearchModalOpen} 
+        onClose={() => setIsSearchModalOpen(false)} 
+      />
     </header>
   );
 };
