@@ -24,6 +24,8 @@ import HealthcareWellnessCategory from "./pages/HealthcareWellnessCategory";
 import DeveloperAPIsCategory from "./pages/DeveloperAPIsCategory";
 import SecurityLegalCategory from "./pages/SecurityLegalCategory";
 import ExperimentalResearchCategory from "./pages/ExperimentalResearchCategory";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +56,8 @@ const App = () => (
           <Route path="/category/developer-apis" element={<DeveloperAPIsCategory />} />
           <Route path="/category/security-legal" element={<SecurityLegalCategory />} />
           <Route path="/category/experimental-research" element={<ExperimentalResearchCategory />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
