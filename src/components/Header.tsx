@@ -3,7 +3,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
 import SearchModal from "./SearchModal";
-import logo from "@/assets/logo.png";
+// Logo will be referenced directly from uploads
 
 const Header = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -31,9 +31,13 @@ const Header = () => {
       {/* Navigation */}
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <img src={logo} alt="AI Agent Zone" className="h-8 w-auto" />
+          {/* Logo and Brand Name */}
+          <div className="flex items-center space-x-3">
+            <img src="/lovable-uploads/3be4ca71-2849-4870-8b9b-226aed931d60.png" alt="AI Agent Zone" className="h-10 w-auto" />
+            <div className="text-xl font-bold">
+              <span className="text-foreground">AI Agent</span>
+              <span className="text-primary ml-1">Zone</span>
+            </div>
           </div>
 
           {/* Navigation Links */}
