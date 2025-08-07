@@ -66,14 +66,6 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Search Button */}
-            <button
-              onClick={() => setIsSearchModalOpen(true)}
-              className="flex items-center text-foreground hover:text-primary orange-underline transition-colors font-medium"
-            >
-              <Search className="w-4 h-4 mr-1" />
-              Search
-            </button>
             <a href="/blogs" className="text-foreground hover:text-primary orange-underline transition-colors font-medium">
               Blogs
             </a>

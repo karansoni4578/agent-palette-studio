@@ -43,8 +43,9 @@ const AgentCard = ({ agent, index }: { agent: Agent; index: number }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ scale: 1.02 }}
-      className="flex-shrink-0 w-[280px] bg-card rounded-2xl shadow-lg border border-border/50 p-6 mx-3 first:ml-6 last:mr-6 transition-transform duration-200"
+      className="flex-shrink-0 w-[280px] bg-card rounded-2xl shadow-lg border border-border/50 p-6 ml-6 first:ml-6 last:mr-6 transition-transform duration-200 cursor-pointer hover:shadow-xl"
       style={{ scrollSnapAlign: 'start' }}
+      onClick={() => window.open('#', '_blank')}
     >
       <div className="flex items-start gap-4">
         <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-muted flex-shrink-0">
@@ -123,23 +124,35 @@ const RecentlyAdded = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="overflow-x-auto scroll-smooth"
+            className="text-center mt-6 sm:hidden"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
               scrollSnapType: 'x mandatory',
             }}
           >
-            <div className="flex w-max pb-4">
+            <div className="flex w-max pb-4 gap-0">
               {recentAgents.map((agent, index) => (
                 <AgentCard key={agent.name} agent={agent} index={index} />
               ))}
             </div>
           </motion.div>
           
+          {/* Desktop Scroll Hint */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="text-center mt-6 hidden sm:block md:hidden"
+          >
+            <p className="text-muted-foreground text-sm">
+              Scroll horizontally to explore more →
+            </p>
+          </motion.div>
+          
           {/* Fade Gradients */}
-          <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-background to-transparent pointer-events-none z-10"></div>
-          <div className="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-background to-transparent pointer-events-none z-10"></div>
+          <div className="absolute top-0 left-0 w-12 h-full bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none z-10"></div>
+          <div className="absolute top-0 right-0 w-12 h-full bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none z-10"></div>
         </div>
 
         {/* Mobile Scroll Hint */}
