@@ -3,70 +3,78 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+interface BlogPost {
+  id: string;
+  title: string;
+  content: string;
+  image_url: string;
+  tags: string;
+  author: string;
+  created_at: string;
+  slug: string;
+}
 
 const Blogs = () => {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "The Rise of AI Agents: Transforming Digital Workflows",
-      excerpt: "Explore how AI agents are revolutionizing productivity and automation across industries, from customer service to content creation.",
-      author: "Sarah Chen",
-      date: "December 15, 2024",
-      readTime: "5 min read",
-      category: "AI Trends",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop"
-    },
-    {
-      id: 2,
-      title: "Best Practices for Implementing AI in Your Business",
-      excerpt: "Learn essential strategies for successfully integrating AI tools into your workflow, including team training and tool selection.",
-      author: "Mike Rodriguez",
-      date: "December 12, 2024",
-      readTime: "7 min read",
-      category: "Business",
-      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&h=300&fit=crop"
-    },
-    {
-      id: 3,
-      title: "The Future of AI Coding Assistants",
-      excerpt: "Discover how AI-powered coding tools are changing software development and what developers can expect in the coming years.",
-      author: "Alex Thompson",
-      date: "December 10, 2024",
-      readTime: "6 min read",
-      category: "Development",
-      image: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=600&h=300&fit=crop"
-    },
-    {
-      id: 4,
-      title: "AI Ethics: Building Responsible AI Agents",
-      excerpt: "Understanding the importance of ethical AI development and how to ensure your AI agents operate responsibly and transparently.",
-      author: "Dr. Emily Johnson",
-      date: "December 8, 2024",
-      readTime: "8 min read",
-      category: "Ethics",
-      image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&h=300&fit=crop"
-    },
-    {
-      id: 5,
-      title: "Getting Started with AI Voice Assistants",
-      excerpt: "A comprehensive guide to choosing and implementing AI voice technology for your personal or business needs.",
-      author: "James Wilson",
-      date: "December 5, 2024",
-      readTime: "4 min read",
-      category: "Voice AI",
-      image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=600&h=300&fit=crop"
-    },
-    {
-      id: 6,
-      title: "AI Image Generation: From Concept to Creation",
-      excerpt: "Master the art of AI image generation with tips on prompting, style selection, and creative workflows using modern AI tools.",
-      author: "Lisa Park",
-      date: "December 3, 2024",
-      readTime: "6 min read",
-      category: "Creative AI",
-      image: "https://images.unsplash.com/photo-1547954575-855750c57bd3?w=600&h=300&fit=crop"
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
+
+  const fetchBlogPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching blog posts:', error);
+        return;
+      }
+
+      setBlogPosts(data || []);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const getExcerpt = (content: string, maxLength: number = 150) => {
+    if (!content) return "";
+    return content.length > maxLength ? content.substring(0, maxLength) + "..." : content;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 bg-muted rounded w-64 mx-auto mb-4"></div>
+              <div className="h-4 bg-muted rounded w-96 mx-auto"></div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -84,42 +92,46 @@ const Blogs = () => {
         </div>
 
         {/* Featured Post */}
-        <Card className="mb-12 overflow-hidden">
-          <div className="md:flex">
-            <div className="md:w-1/2">
-              <img 
-                src={blogPosts[0].image} 
-                alt={blogPosts[0].title}
-                className="w-full h-64 md:h-full object-cover"
-              />
-            </div>
-            <div className="md:w-1/2 p-8">
-              <Badge variant="secondary" className="mb-4">
-                {blogPosts[0].category}
-              </Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-4">
-                {blogPosts[0].title}
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                {blogPosts[0].excerpt}
-              </p>
-              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                <div className="flex items-center space-x-1">
-                  <User className="w-4 h-4" />
-                  <span>{blogPosts[0].author}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Calendar className="w-4 h-4" />
-                  <span>{blogPosts[0].date}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Clock className="w-4 h-4" />
-                  <span>{blogPosts[0].readTime}</span>
+        {blogPosts.length > 0 && (
+          <Card className="mb-12 overflow-hidden">
+            <div className="md:flex">
+              <div className="md:w-1/2">
+                <img 
+                  src={blogPosts[0].image_url || "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop"} 
+                  alt={blogPosts[0].title}
+                  className="w-full h-64 md:h-full object-cover"
+                />
+              </div>
+              <div className="md:w-1/2 p-8">
+                <Badge variant="secondary" className="mb-4">
+                  {blogPosts[0].tags || "Blog"}
+                </Badge>
+                <Link to={`/blog/${blogPosts[0].slug || blogPosts[0].id}`}>
+                  <h2 className="text-2xl font-bold text-foreground mb-4 hover:text-primary transition-colors">
+                    {blogPosts[0].title}
+                  </h2>
+                </Link>
+                <p className="text-muted-foreground mb-6">
+                  {getExcerpt(blogPosts[0].content)}
+                </p>
+                <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                  <div className="flex items-center space-x-1">
+                    <User className="w-4 h-4" />
+                    <span>{blogPosts[0].author || "Anonymous"}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Calendar className="w-4 h-4" />
+                    <span>{formatDate(blogPosts[0].created_at)}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Clock className="w-4 h-4" />
+                    <span>5 min read</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        )}
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -127,37 +139,47 @@ const Blogs = () => {
             <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="aspect-video overflow-hidden">
                 <img 
-                  src={post.image} 
+                  src={post.image_url || "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop"} 
                   alt={post.title}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <CardHeader>
                 <Badge variant="secondary" className="w-fit mb-2">
-                  {post.category}
+                  {post.tags || "Blog"}
                 </Badge>
-                <CardTitle className="text-lg line-clamp-2">
-                  {post.title}
-                </CardTitle>
+                <Link to={`/blog/${post.slug || post.id}`}>
+                  <CardTitle className="text-lg line-clamp-2 hover:text-primary transition-colors">
+                    {post.title}
+                  </CardTitle>
+                </Link>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                  {post.excerpt}
+                  {getExcerpt(post.content)}
                 </p>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center space-x-1">
                     <User className="w-3 h-3" />
-                    <span>{post.author}</span>
+                    <span>{post.author || "Anonymous"}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Clock className="w-3 h-3" />
-                    <span>{post.readTime}</span>
+                    <span>5 min read</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
+
+        {/* Empty State */}
+        {blogPosts.length === 0 && (
+          <div className="text-center py-16">
+            <h3 className="text-xl font-semibold text-foreground mb-4">No blog posts found</h3>
+            <p className="text-muted-foreground">Check back later for new content!</p>
+          </div>
+        )}
 
         {/* Newsletter Signup */}
         <Card className="mt-16 bg-muted/30">

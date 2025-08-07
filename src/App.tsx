@@ -7,6 +7,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import SubmitAgent from "./pages/SubmitAgent";
 import Blogs from "./pages/Blogs";
+import BlogPost from "./pages/BlogPost";
 import ExploreCategories from "./pages/ExploreCategories";
 import NotFound from "./pages/NotFound";
 import ChatCategory from "./pages/ChatCategory";
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/submit" element={<SubmitAgent />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/categories" element={<ExploreCategories />} />
           <Route path="/category/chat" element={<ChatCategory />} />
           <Route path="/category/writing" element={<WritingCategory />} />
