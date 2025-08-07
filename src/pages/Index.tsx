@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import BrowseCategories from "@/components/BrowseCategories";
+import RecentlyAdded from "@/components/RecentlyAdded";
 import TrendingAgents from "@/components/TrendingAgents";
 import Footer from "@/components/Footer";
 import FloatingActionButton from "@/components/FloatingActionButton";
@@ -28,6 +29,7 @@ const Index = () => {
       <Header />
       <Hero />
       <BrowseCategories />
+      <RecentlyAdded />
       <TrendingAgents />
       <Footer />
       <FloatingActionButton />
