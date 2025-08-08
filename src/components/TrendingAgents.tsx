@@ -320,15 +320,6 @@ const TrendingAgents = () => {
                 → Want your tool featured here? Submit It
               </span>
             </div>
-            <div 
-              className="inline-flex items-center bg-white border-2 border-[#F97316] text-[#F97316] px-6 py-3 rounded-xl font-semibold hover:bg-[#F97316] hover:text-white transition-colors duration-300 cursor-pointer"
-              onClick={() => setIsSearchModalOpen(true)}
-            >
-              <Search className="w-4 h-4 mr-2" />
-            <span style={{ fontFamily: 'Poppins, sans-serif' }}>
-                Search All Tools
-            </span>
-          </div>
           </div>
         </div>
       </div>

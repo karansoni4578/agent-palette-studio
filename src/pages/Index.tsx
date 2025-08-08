@@ -33,6 +33,23 @@ const Index = () => {
       <RecentlyAdded />
       <TrendingAgents />
       <LatestBlogs />
+      
+      {/* Submit Tool CTA Section */}
+      <section className="py-16 bg-[#FFF7ED]">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div 
+              className="inline-flex items-center bg-[#F97316] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#EA580C] transition-colors duration-300 cursor-pointer text-lg"
+              onClick={() => window.location.href = '/submit'}
+            >
+              <span style={{ fontFamily: 'Poppins, sans-serif' }}>
+                → Want your tool featured? Submit It
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <Footer />
       <FloatingActionButton />
     </div>

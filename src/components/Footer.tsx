@@ -9,8 +9,8 @@ const Footer = () => {
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <img src="/lovable-uploads/3be4ca71-2849-4870-8b9b-226aed931d60.png" alt="AI Agent Zone" className="h-10 w-auto brightness-0 invert" />
-              <div className="text-xl font-bold">
+              <img src="/lovable-uploads/3be4ca71-2849-4870-8b9b-226aed931d60.png" alt="AI Agent Zone" className="h-14 w-auto brightness-0 invert" />
+              <div className="text-3xl font-bold">
                 <span className="text-white">AI Agent</span>
                 <span className="text-primary ml-1">Zone</span>
               </div>
