@@ -309,19 +309,6 @@ const TrendingAgents = () => {
           </div>
         )}
 
-        {/* CTA Section */}
-        <div className="text-center">
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <div 
-              className="inline-flex items-center bg-[#F97316] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#EA580C] transition-colors duration-300 cursor-pointer"
-              onClick={() => window.location.href = '/submit'}
-            >
-              <span style={{ fontFamily: 'Poppins, sans-serif' }}>
-                → Want your tool featured here? Submit It
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
       
       <SearchModal 

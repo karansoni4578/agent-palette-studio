@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const TermsOfService = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-warm-bg">
+      <Header />
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -144,6 +147,7 @@ const TermsOfService = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
