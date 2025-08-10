@@ -33,7 +33,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo and Brand Name */}
           <div className="flex items-center space-x-3">
-            <img src="/lovable-uploads/3be4ca71-2849-4870-8b9b-226aed931d60.png" alt="AI Agent Zone" className="h-15 w-auto" />
+            <img src="/lovable-uploads/3be4ca71-2849-4870-8b9b-226aed931d60.png" alt="AI Agent Zone" className="h-14 w-auto" />
             <div className="text-3xl font-bold">
               <span className="text-foreground">AI Agent</span>
               <span className="text-primary ml-1">Zone</span>
