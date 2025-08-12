@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      agents: {
+        Row: {
+          category_id: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          is_free: boolean | null
+          logo_url: string | null
+          name: string
+          tags: string[] | null
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_free?: boolean | null
+          logo_url?: string | null
+          name: string
+          tags?: string[] | null
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_free?: boolean | null
+          logo_url?: string | null
+          name?: string
+          tags?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agents_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       "blog posts": {
         Row: {
           author: string | null
@@ -44,6 +85,21 @@ export type Database = {
           slug?: string | null
           tags?: string | null
           title?: string | null
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
         }
         Relationships: []
       }
