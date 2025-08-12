@@ -2,8 +2,7 @@ import { Github, Twitter, Linkedin, Mail } from "lucide-react";
 // Logo will be referenced directly from uploads
 
 const Footer = () => {
-  return (
-    <footer className="bg-slate-900 text-white py-16">
+  return <footer className="bg-slate-900 text-white py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Description */}
@@ -91,16 +90,12 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-gray-400 text-sm">
-            © 2024 AI Agent Zone. All rights reserved.
-          </p>
+          <p className="text-gray-400 text-sm">© 2025 AI Agent Zone. All rights reserved.</p>
           <p className="text-gray-400 text-sm mt-4 md:mt-0">
             Made with ❤️ for the AI community
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
