@@ -96,7 +96,7 @@ const Header = () => {
           </div>
 
           {/* CTA Button */}
-          <Button className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" onClick={() => window.location.href = '/submit'}>
+          <Button className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" onClick={() => window.location.href = '/submit-agent'}>
             Submit Your Agent
           </Button>
 

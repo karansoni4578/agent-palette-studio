@@ -29,6 +29,7 @@ import ExperimentalResearchCategory from "./pages/ExperimentalResearchCategory";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import AdminPanel from "./pages/AdminPanel";
+import SubmitAgentPage from "./pages/SubmitAgentPage";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/submit-agent" element={<SubmitAgentPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
