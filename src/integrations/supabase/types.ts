@@ -20,7 +20,9 @@ export type Database = {
           created_at: string | null
           description: string | null
           id: string
+          image_url: string | null
           is_free: boolean | null
+          link: string | null
           logo_url: string | null
           name: string
           tags: string[] | null
@@ -30,7 +32,9 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           id?: string
+          image_url?: string | null
           is_free?: boolean | null
+          link?: string | null
           logo_url?: string | null
           name: string
           tags?: string[] | null
@@ -40,7 +44,9 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           id?: string
+          image_url?: string | null
           is_free?: boolean | null
+          link?: string | null
           logo_url?: string | null
           name?: string
           tags?: string[] | null
