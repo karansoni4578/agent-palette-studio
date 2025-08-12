@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,7 +10,7 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
   const [imageError, setImageError] = React.useState(false);
 
   const handleClick = () => {
-    window.open(model.official_url, '_blank', 'noopener,noreferrer');
+    window.open(model.website_url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -23,29 +23,31 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
       style={{ scrollSnapAlign: 'start' }}
       onClick={handleClick}
     >
-      {/* Free/Paid Badge */}
+      {/* Pricing Badge */}
       <div className="absolute top-4 right-4">
         <Badge 
           className={`text-xs px-2 py-1 ${
-            model.is_free 
+            model.pricing_type === 'Free'
               ? 'bg-green-100 text-green-800 hover:bg-green-200' 
-              : 'bg-red-100 text-red-800 hover:bg-red-200'
+              : model.pricing_type === 'Paid'
+              ? 'bg-red-100 text-red-800 hover:bg-red-200'
+              : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
           }`}
         >
-          {model.is_free ? 'Free' : 'Paid'}
+          {model.pricing_type}
         </Badge>
       </div>
 
       <div className="flex items-start gap-4">
-        {/* Image */}
+        {/* Logo */}
         <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-muted flex-shrink-0">
-          {model.image_url && (
+          {model.logo_url && (
             <>
               {!imageLoaded && !imageError && (
                 <Skeleton className="w-full h-full" />
               )}
               <img
-                src={model.image_url}
+                src={model.logo_url}
                 alt={model.name}
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'
@@ -58,7 +60,7 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
               />
             </>
           )}
-          {(!model.image_url || imageError) && (
+          {(!model.logo_url || imageError) && (
             <div className="absolute inset-0 bg-primary/10 flex items-center justify-center">
               <span className="text-primary text-lg font-bold">
                 {model.name.charAt(0)}
@@ -106,8 +108,89 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
   );
 };
 
+const AutoCarousel = ({ models }: { models: any[] }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer || models.length === 0) return;
+
+    let scrollSpeed = 1;
+    let animationId: number;
+
+    const scroll = () => {
+      if (scrollContainer) {
+        scrollContainer.scrollLeft += scrollSpeed;
+        
+        // Reset to beginning when reaching the end for infinite scroll
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    // Start auto-scroll after a delay
+    const startAutoScroll = () => {
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    const timer = setTimeout(startAutoScroll, 2000);
+
+    // Pause on hover
+    const handleMouseEnter = () => {
+      cancelAnimationFrame(animationId);
+    };
+
+    const handleMouseLeave = () => {
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    scrollContainer.addEventListener('mouseenter', handleMouseEnter);
+    scrollContainer.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      clearTimeout(timer);
+      scrollContainer?.removeEventListener('mouseenter', handleMouseEnter);
+      scrollContainer?.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [models]);
+
+  return (
+    <div className="relative">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        ref={scrollRef}
+        className="overflow-x-auto"
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          scrollSnapType: 'x mandatory',
+        }}
+      >
+        <div className="flex w-max pb-4 gap-0">
+          {models.map((model, index) => (
+            <ModelCard key={model.id} model={model} index={index} />
+          ))}
+          {/* Duplicate for seamless scroll effect */}
+          {models.map((model, index) => (
+            <ModelCard key={`dup-${model.id}`} model={model} index={index + models.length} />
+          ))}
+        </div>
+      </motion.div>
+      
+      {/* Fade Gradients */}
+      <div className="absolute top-0 left-0 w-12 h-full bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none z-10"></div>
+      <div className="absolute top-0 right-0 w-12 h-full bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none z-10"></div>
+    </div>
+  );
+};
+
 const RecentlyAdded = () => {
-  const { models, loading, error } = useRecentModelsAgents(20);
+  const { models, loading, error } = useRecentModelsAgents(10);
 
   return (
     <section className="py-16 bg-background">
@@ -143,35 +226,9 @@ const RecentlyAdded = () => {
           </div>
         )}
 
-        {/* Horizontal Scroll Container */}
+        {/* Auto-Scrolling Carousel */}
         {!loading && !error && models.length > 0 && (
-          <div className="relative">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="overflow-x-auto"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                scrollSnapType: 'x mandatory',
-              }}
-            >
-              <div className="flex w-max pb-4 gap-0">
-                {models.map((model, index) => (
-                  <ModelCard key={model.id} model={model} index={index} />
-                ))}
-                {/* Duplicate for seamless scroll effect */}
-                {models.map((model, index) => (
-                  <ModelCard key={`dup-${model.id}`} model={model} index={index + models.length} />
-                ))}
-              </div>
-            </motion.div>
-            
-            {/* Fade Gradients */}
-            <div className="absolute top-0 left-0 w-12 h-full bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none z-10"></div>
-            <div className="absolute top-0 right-0 w-12 h-full bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none z-10"></div>
-          </div>
+          <AutoCarousel models={models} />
         )}
 
         {/* Desktop Scroll Hint */}

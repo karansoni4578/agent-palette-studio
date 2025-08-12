@@ -11,7 +11,7 @@ interface ModelAgentCardProps {
 
 const ModelAgentCard: React.FC<ModelAgentCardProps> = ({ model, className = "" }) => {
   const handleToolClick = () => {
-    window.open(model.official_url, '_blank', 'noopener,noreferrer');
+    window.open(model.website_url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -19,24 +19,26 @@ const ModelAgentCard: React.FC<ModelAgentCardProps> = ({ model, className = "" }
       className={`group bg-white rounded-2xl p-6 border border-gray-200 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg relative ${className}`}
       onClick={handleToolClick}
     >
-      {/* Free/Paid Badge */}
+      {/* Pricing Badge */}
       <div className="absolute top-4 right-4">
         <Badge 
           className={`text-xs px-2 py-1 ${
-            model.is_free 
+            model.pricing_type === 'Free'
               ? 'bg-green-100 text-green-800 hover:bg-green-200' 
-              : 'bg-red-100 text-red-800 hover:bg-red-200'
+              : model.pricing_type === 'Paid'
+              ? 'bg-red-100 text-red-800 hover:bg-red-200'
+              : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
           }`}
         >
-          {model.is_free ? 'Free' : 'Paid'}
+          {model.pricing_type}
         </Badge>
       </div>
 
-      {/* Image */}
-      {model.image_url && (
+      {/* Logo */}
+      {model.logo_url && (
         <div className="w-16 h-16 mb-4 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
           <img 
-            src={model.image_url} 
+            src={model.logo_url} 
             alt={model.name}
             className="w-full h-full object-cover"
             onError={(e) => {

@@ -6,11 +6,11 @@ export interface ModelAgent {
   name: string;
   description: string;
   category: string;
-  image_url?: string;
+  logo_url?: string;
   tags: string[];
-  is_free: boolean;
-  official_url: string;
-  date_added: string;
+  pricing_type: 'Free' | 'Paid' | 'Freemium';
+  website_url: string;
+  created_at: string;
 }
 
 export const useModelsAgents = (category?: string, limit?: number) => {
@@ -27,7 +27,7 @@ export const useModelsAgents = (category?: string, limit?: number) => {
         let query = supabase
           .from('models_agents')
           .select('*')
-          .order('date_added', { ascending: false });
+          .order('created_at', { ascending: false });
 
         if (category) {
           query = query.eq('category', category);
@@ -56,14 +56,14 @@ export const useModelsAgents = (category?: string, limit?: number) => {
     fetchModels();
   }, [category, limit]);
 
-  const searchModels = (searchTerm: string, filterFree?: boolean) => {
+  const searchModels = (searchTerm: string, pricingFilter?: 'Free' | 'Paid' | 'Freemium') => {
     return models.filter(model => {
       const matchesSearch = searchTerm === '' || 
         model.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         model.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
         model.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
 
-      const matchesFilter = filterFree === undefined || model.is_free === filterFree;
+      const matchesFilter = pricingFilter === undefined || model.pricing_type === pricingFilter;
 
       return matchesSearch && matchesFilter;
     });
@@ -77,6 +77,6 @@ export const useModelsAgents = (category?: string, limit?: number) => {
   };
 };
 
-export const useRecentModelsAgents = (limit: number = 8) => {
+export const useRecentModelsAgents = (limit: number = 10) => {
   return useModelsAgents(undefined, limit);
 };

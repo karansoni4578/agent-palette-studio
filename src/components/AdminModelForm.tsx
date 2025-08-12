@@ -33,9 +33,9 @@ interface ModelFormData {
   description: string;
   category: string;
   tags: string[];
-  is_free: boolean;
-  official_url: string;
-  image_file?: File;
+  pricing_type: 'Free' | 'Paid' | 'Freemium';
+  website_url: string;
+  logo_file?: File;
 }
 
 const AdminModelForm = () => {
@@ -44,8 +44,8 @@ const AdminModelForm = () => {
     description: '',
     category: '',
     tags: [],
-    is_free: true,
-    official_url: ''
+    pricing_type: 'Free',
+    website_url: ''
   });
   const [newTag, setNewTag] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +55,7 @@ const AdminModelForm = () => {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setFormData(prev => ({ ...prev, image_file: file }));
+      setFormData(prev => ({ ...prev, logo_file: file }));
       
       // Create preview
       const reader = new FileReader();
@@ -73,13 +73,13 @@ const AdminModelForm = () => {
       const filePath = `${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('models-images')
+        .from('logos')
         .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
       const { data } = supabase.storage
-        .from('models-images')
+        .from('logos')
         .getPublicUrl(filePath);
 
       return data.publicUrl;
@@ -113,11 +113,11 @@ const AdminModelForm = () => {
     try {
       let imageUrl = null;
       
-      // Upload image if provided
-      if (formData.image_file) {
-        imageUrl = await uploadImage(formData.image_file);
+      // Upload logo if provided
+      if (formData.logo_file) {
+        imageUrl = await uploadImage(formData.logo_file);
         if (!imageUrl) {
-          throw new Error('Failed to upload image');
+          throw new Error('Failed to upload logo');
         }
       }
 
@@ -129,9 +129,9 @@ const AdminModelForm = () => {
           description: formData.description.trim(),
           category: formData.category,
           tags: formData.tags,
-          is_free: formData.is_free,
-          official_url: formData.official_url.trim(),
-          image_url: imageUrl
+          pricing_type: formData.pricing_type,
+          website_url: formData.website_url.trim(),
+          logo_url: imageUrl
         });
 
       if (error) throw error;
@@ -147,8 +147,8 @@ const AdminModelForm = () => {
         description: '',
         category: '',
         tags: [],
-        is_free: true,
-        official_url: ''
+        pricing_type: 'Free',
+        website_url: ''
       });
       setImagePreview(null);
 
@@ -166,7 +166,7 @@ const AdminModelForm = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Add New Model/Agent</h2>
+      <h2 className="text-2xl font-bold text-[#111827] mb-6" style={{ fontFamily: 'Poppins, sans-serif' }}>Add New Model/Agent</h2>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name */}
@@ -214,25 +214,25 @@ const AdminModelForm = () => {
           </Select>
         </div>
 
-        {/* Official URL */}
+        {/* Website URL */}
         <div>
-          <Label htmlFor="url">Official URL *</Label>
+          <Label htmlFor="url">Website URL *</Label>
           <Input
             id="url"
             type="url"
-            value={formData.official_url}
-            onChange={(e) => setFormData(prev => ({ ...prev, official_url: e.target.value }))}
+            value={formData.website_url}
+            onChange={(e) => setFormData(prev => ({ ...prev, website_url: e.target.value }))}
             placeholder="https://example.com"
             required
           />
         </div>
 
-        {/* Image Upload */}
+        {/* Logo Upload */}
         <div>
-          <Label htmlFor="image">Image</Label>
+          <Label htmlFor="logo">Logo</Label>
           <div className="mt-2">
             <input
-              id="image"
+              id="logo"
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
@@ -241,11 +241,11 @@ const AdminModelForm = () => {
             <Button
               type="button"
               variant="outline"
-              onClick={() => document.getElementById('image')?.click()}
+              onClick={() => document.getElementById('logo')?.click()}
               className="w-full"
             >
               <Upload className="w-4 h-4 mr-2" />
-              Upload Image
+              Upload Logo
             </Button>
             {imagePreview && (
               <div className="mt-4">
@@ -287,23 +287,27 @@ const AdminModelForm = () => {
           </div>
         </div>
 
-        {/* Free/Paid Toggle */}
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="is_free"
-            checked={formData.is_free}
-            onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_free: checked }))}
-          />
-          <Label htmlFor="is_free">
-            {formData.is_free ? 'Free' : 'Paid'}
-          </Label>
+        {/* Pricing Type */}
+        <div>
+          <Label htmlFor="pricing">Pricing Type *</Label>
+          <Select value={formData.pricing_type} onValueChange={(value: 'Free' | 'Paid' | 'Freemium') => setFormData(prev => ({ ...prev, pricing_type: value }))}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select pricing type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Free">Free</SelectItem>
+              <SelectItem value="Paid">Paid</SelectItem>
+              <SelectItem value="Freemium">Freemium</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Submit Button */}
         <Button 
           type="submit" 
-          className="w-full bg-[#F97316] hover:bg-[#EA580C]"
-          disabled={isLoading || !formData.name || !formData.description || !formData.category || !formData.official_url}
+          className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-semibold"
+          style={{ fontFamily: 'Poppins, sans-serif' }}
+          disabled={isLoading || !formData.name || !formData.description || !formData.category || !formData.website_url}
         >
           {isLoading ? 'Adding...' : 'Add Model/Agent'}
         </Button>
