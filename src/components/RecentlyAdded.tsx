@@ -2,40 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRecentModelsAgents } from "@/hooks/useModelsAgents";
+import { ExternalLink } from "lucide-react";
 
-interface Agent {
-  name: string;
-  description: string;
-  image: string;
-  category?: string;
-}
-
-const recentAgents: Agent[] = [
-  { name: "GPT-4 Turbo", description: "Advanced conversational AI with enhanced reasoning capabilities", image: "/placeholder.svg", category: "Chat" },
-  { name: "Claude 3 Opus", description: "Anthropic's most capable AI assistant for complex tasks", image: "/placeholder.svg", category: "Writing" },
-  { name: "DALL-E 3", description: "OpenAI's latest image generation model with improved quality", image: "/placeholder.svg", category: "Image" },
-  { name: "Midjourney V6", description: "Professional-grade AI art generator with photorealistic outputs", image: "/placeholder.svg", category: "Design" },
-  { name: "GitHub Copilot X", description: "AI-powered code completion and programming assistant", image: "/placeholder.svg", category: "Coding" },
-  { name: "Notion AI", description: "Intelligent writing and productivity assistant for workspaces", image: "/placeholder.svg", category: "Productivity" },
-  { name: "Jasper AI", description: "Enterprise marketing copywriting and content creation tool", image: "/placeholder.svg", category: "Marketing" },
-  { name: "Synthesia", description: "AI video generation platform with realistic avatars", image: "/placeholder.svg", category: "Video" },
-  { name: "ElevenLabs", description: "High-quality AI voice synthesis and cloning technology", image: "/placeholder.svg", category: "Voice" },
-  { name: "Perplexity AI", description: "Research-focused search engine with AI-powered answers", image: "/placeholder.svg", category: "Research" },
-  { name: "Runway ML", description: "Creative AI tools for video editing and generation", image: "/placeholder.svg", category: "Video" },
-  { name: "Stable Diffusion XL", description: "Open-source image generation with enhanced detail control", image: "/placeholder.svg", category: "Image" },
-  { name: "Character.AI", description: "Interactive AI characters for entertainment and roleplay", image: "/placeholder.svg", category: "Chat" },
-  { name: "Grammarly AI", description: "Advanced writing assistant with tone and clarity suggestions", image: "/placeholder.svg", category: "Writing" },
-  { name: "Zapier AI", description: "Intelligent automation platform for workflow optimization", image: "/placeholder.svg", category: "Productivity" },
-  { name: "DataRobot", description: "Enterprise AI platform for predictive analytics", image: "/placeholder.svg", category: "Analytics" },
-  { name: "Copy.ai", description: "AI-powered copywriting tool for marketing content", image: "/placeholder.svg", category: "Marketing" },
-  { name: "Murf AI", description: "Professional AI voiceover generator with multiple languages", image: "/placeholder.svg", category: "Voice" },
-  { name: "Tableau AI", description: "Smart data visualization with natural language queries", image: "/placeholder.svg", category: "Analytics" },
-  { name: "Loom AI", description: "Automatic video transcription and summary generation", image: "/placeholder.svg", category: "Video" }
-];
-
-const AgentCard = ({ agent, index }: { agent: Agent; index: number }) => {
+const ModelCard = ({ model, index }: { model: any; index: number }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
   const [imageError, setImageError] = React.useState(false);
+
+  const handleClick = () => {
+    window.open(model.official_url, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <motion.div
@@ -43,54 +19,87 @@ const AgentCard = ({ agent, index }: { agent: Agent; index: number }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ scale: 1.02 }}
-      className="flex-shrink-0 w-[280px] bg-card rounded-2xl shadow-lg border border-border/50 p-6 ml-6 first:ml-6 last:mr-6 transition-transform duration-200 cursor-pointer hover:shadow-xl"
+      className="flex-shrink-0 w-[300px] bg-card rounded-2xl shadow-lg border border-border/50 p-6 ml-6 first:ml-6 last:mr-6 transition-transform duration-200 cursor-pointer hover:shadow-xl relative"
       style={{ scrollSnapAlign: 'start' }}
-      onClick={() => window.open('#', '_blank')}
+      onClick={handleClick}
     >
+      {/* Free/Paid Badge */}
+      <div className="absolute top-4 right-4">
+        <Badge 
+          className={`text-xs px-2 py-1 ${
+            model.is_free 
+              ? 'bg-green-100 text-green-800 hover:bg-green-200' 
+              : 'bg-red-100 text-red-800 hover:bg-red-200'
+          }`}
+        >
+          {model.is_free ? 'Free' : 'Paid'}
+        </Badge>
+      </div>
+
       <div className="flex items-start gap-4">
+        {/* Image */}
         <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-muted flex-shrink-0">
-          {!imageLoaded && !imageError && (
-            <Skeleton className="w-full h-full" />
+          {model.image_url && (
+            <>
+              {!imageLoaded && !imageError && (
+                <Skeleton className="w-full h-full" />
+              )}
+              <img
+                src={model.image_url}
+                alt={model.name}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoad={() => setImageLoaded(true)}
+                onError={() => {
+                  setImageError(true);
+                  setImageLoaded(true);
+                }}
+              />
+            </>
           )}
-          <img
-            src={agent.image}
-            alt={agent.name}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onLoad={() => setImageLoaded(true)}
-            onError={() => {
-              setImageError(true);
-              setImageLoaded(true);
-            }}
-          />
-          {imageError && (
+          {(!model.image_url || imageError) && (
             <div className="absolute inset-0 bg-primary/10 flex items-center justify-center">
               <span className="text-primary text-lg font-bold">
-                {agent.name.charAt(0)}
+                {model.name.charAt(0)}
               </span>
             </div>
           )}
         </div>
         
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 pr-12">
           <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-bold text-foreground text-sm leading-tight truncate">
-              {agent.name}
+            <h3 className="font-bold text-foreground text-sm leading-tight">
+              {model.name}
             </h3>
-            {agent.category && (
-              <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20 flex-shrink-0">
-                {agent.category}
-              </Badge>
-            )}
           </div>
-          <p className="text-muted-foreground text-xs leading-relaxed overflow-hidden" style={{ 
+          <p className="text-muted-foreground text-xs leading-relaxed overflow-hidden mb-3" style={{ 
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical' as const
           }}>
-            {agent.description}
+            {model.description}
           </p>
+          
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1 mb-3">
+            {model.tags.slice(0, 2).map((tag: string) => (
+              <Badge key={tag} variant="outline" className="text-xs px-2 py-0.5">
+                {tag}
+              </Badge>
+            ))}
+            {model.tags.length > 2 && (
+              <Badge variant="outline" className="text-xs px-2 py-0.5">
+                +{model.tags.length - 2}
+              </Badge>
+            )}
+          </div>
+
+          {/* Visit Button */}
+          <div className="flex items-center gap-1 text-primary text-xs font-medium">
+            <span>Visit Tool</span>
+            <ExternalLink className="w-3 h-3" />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -98,6 +107,8 @@ const AgentCard = ({ agent, index }: { agent: Agent; index: number }) => {
 };
 
 const RecentlyAdded = () => {
+  const { models, loading, error } = useRecentModelsAgents(20);
+
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -118,27 +129,53 @@ const RecentlyAdded = () => {
           </motion.div>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-16">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-16">
+            <p className="text-muted-foreground">Unable to load models at the moment.</p>
+          </div>
+        )}
+
         {/* Horizontal Scroll Container */}
-        <div className="relative">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-center mt-6 sm:hidden"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              scrollSnapType: 'x mandatory',
-            }}
-          >
-            <div className="flex w-max pb-4 gap-0">
-              {recentAgents.map((agent, index) => (
-                <AgentCard key={agent.name} agent={agent} index={index} />
-              ))}
-            </div>
-          </motion.div>
-          
-          {/* Desktop Scroll Hint */}
+        {!loading && !error && models.length > 0 && (
+          <div className="relative">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="overflow-x-auto"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                scrollSnapType: 'x mandatory',
+              }}
+            >
+              <div className="flex w-max pb-4 gap-0">
+                {models.map((model, index) => (
+                  <ModelCard key={model.id} model={model} index={index} />
+                ))}
+                {/* Duplicate for seamless scroll effect */}
+                {models.map((model, index) => (
+                  <ModelCard key={`dup-${model.id}`} model={model} index={index + models.length} />
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* Fade Gradients */}
+            <div className="absolute top-0 left-0 w-12 h-full bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none z-10"></div>
+            <div className="absolute top-0 right-0 w-12 h-full bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none z-10"></div>
+          </div>
+        )}
+
+        {/* Desktop Scroll Hint */}
+        {!loading && !error && models.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -149,23 +186,28 @@ const RecentlyAdded = () => {
               Scroll horizontally to explore more →
             </p>
           </motion.div>
-          
-          {/* Fade Gradients */}
-          <div className="absolute top-0 left-0 w-12 h-full bg-gradient-to-r from-background via-background/80 to-transparent pointer-events-none z-10"></div>
-          <div className="absolute top-0 right-0 w-12 h-full bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none z-10"></div>
-        </div>
+        )}
 
         {/* Mobile Scroll Hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1 }}
-          className="text-center mt-6 md:hidden"
-        >
-          <p className="text-muted-foreground text-sm">
-            Swipe left to explore more →
-          </p>
-        </motion.div>
+        {!loading && !error && models.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="text-center mt-6"
+          >
+            <p className="text-muted-foreground text-sm">
+              Scroll horizontally to explore more →
+            </p>
+          </motion.div>
+        )}
+
+        {/* Fallback when no models */}
+        {!loading && !error && models.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-muted-foreground">No models available at the moment.</p>
+          </div>
+        )}
       </div>
 
     </section>
