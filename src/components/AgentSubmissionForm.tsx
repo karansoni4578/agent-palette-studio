@@ -3,9 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Upload, CheckCircle } from 'lucide-react';
+import { Upload, CheckCircle, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useCategories } from '@/hooks/useAgents';
@@ -16,6 +18,8 @@ interface AgentFormData {
   link: string;
   category_id: string;
   image_file?: File;
+  is_free: boolean;
+  tags: string[];
 }
 
 interface AgentSubmissionFormProps {
@@ -27,8 +31,11 @@ const AgentSubmissionForm = ({ onAgentAdded }: AgentSubmissionFormProps) => {
     name: '',
     description: '',
     link: '',
-    category_id: ''
+    category_id: '',
+    is_free: true,
+    tags: []
   });
+  const [tagInput, setTagInput] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -95,7 +102,9 @@ const AgentSubmissionForm = ({ onAgentAdded }: AgentSubmissionFormProps) => {
           description: formData.description.trim(),
           link: formData.link.trim(),
           category_id: formData.category_id,
-          image_url: imageUrl
+          image_url: imageUrl,
+          is_free: formData.is_free,
+          tags: formData.tags
         });
 
       if (error) throw error;
@@ -110,9 +119,12 @@ const AgentSubmissionForm = ({ onAgentAdded }: AgentSubmissionFormProps) => {
         name: '',
         description: '',
         link: '',
-        category_id: ''
+        category_id: '',
+        is_free: true,
+        tags: []
       });
       setImagePreview(null);
+      setTagInput('');
       setIsSubmitted(true);
       
       // Notify parent component
@@ -130,6 +142,17 @@ const AgentSubmissionForm = ({ onAgentAdded }: AgentSubmissionFormProps) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleAddTag = () => {
+    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+      setFormData(prev => ({ ...prev, tags: [...prev.tags, tagInput.trim()] }));
+      setTagInput('');
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setFormData(prev => ({ ...prev, tags: prev.tags.filter(tag => tag !== tagToRemove) }));
   };
 
   const resetForm = () => {
@@ -231,6 +254,61 @@ const AgentSubmissionForm = ({ onAgentAdded }: AgentSubmissionFormProps) => {
                 )}
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Tags */}
+          <div>
+            <Label htmlFor="tags">Tags</Label>
+            <div className="mt-1 space-y-2">
+              <div className="flex gap-2">
+                <Input
+                  id="tags"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  placeholder="Add a tag (e.g., AI, Chatbot, Free)"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleAddTag();
+                    }
+                  }}
+                />
+                <Button type="button" onClick={handleAddTag} variant="outline">
+                  Add
+                </Button>
+              </div>
+              {formData.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {formData.tags.map((tag, index) => (
+                    <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                      {tag}
+                      <X 
+                        className="w-3 h-3 cursor-pointer hover:text-red-500" 
+                        onClick={() => handleRemoveTag(tag)}
+                      />
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Free/Paid Toggle */}
+          <div className="flex items-center justify-between">
+            <div>
+              <Label htmlFor="is_free">Pricing Type</Label>
+              <p className="text-sm text-gray-500">Is this agent free to use?</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="is_free" className="text-sm">
+                {formData.is_free ? 'Free' : 'Paid'}
+              </Label>
+              <Switch
+                id="is_free"
+                checked={formData.is_free}
+                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_free: checked }))}
+              />
+            </div>
           </div>
 
           {/* Logo Upload */}

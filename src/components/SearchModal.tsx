@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -109,17 +110,52 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedTag, setSelectedTag] = useState("All Tags");
+  const [dbAgents, setDbAgents] = useState<any[]>([]);
+
+  // Fetch agents from Supabase
+  useEffect(() => {
+    const fetchAgents = async () => {
+      const { data: agents } = await supabase
+        .from('agents')
+        .select(`
+          *,
+          categories (name)
+        `);
+      
+      if (agents) {
+        const formattedAgents = agents.map(agent => ({
+          name: agent.name,
+          url: agent.link,
+          description: agent.description,
+          tags: agent.tags || [],
+          category: agent.categories?.name || 'Uncategorized',
+          users: '1K+',
+          rating: 4.0
+        }));
+        setDbAgents(formattedAgents);
+      }
+    };
+
+    if (isOpen) {
+      fetchAgents();
+    }
+  }, [isOpen]);
+
+  // Combine static tools with database agents
+  const combinedTools = useMemo(() => {
+    return [...allTools, ...dbAgents];
+  }, [dbAgents]);
 
   // Get all unique tags
   const allTags = useMemo(() => {
     const tags = new Set<string>();
-    allTools.forEach(tool => tool.tags.forEach(tag => tags.add(tag)));
+    combinedTools.forEach(tool => tool.tags.forEach(tag => tags.add(tag)));
     return ["All Tags", ...Array.from(tags).sort()];
-  }, []);
+  }, [combinedTools]);
 
   // Filter tools based on search query, category, and tags
   const filteredTools = useMemo(() => {
-    return allTools.filter(tool => {
+    return combinedTools.filter(tool => {
       const matchesSearch = searchQuery === "" || 
         tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -130,7 +166,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
       
       return matchesSearch && matchesCategory && matchesTag;
     });
-  }, [searchQuery, selectedCategory, selectedTag]);
+  }, [searchQuery, selectedCategory, selectedTag, combinedTools]);
 
   const handleToolClick = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');

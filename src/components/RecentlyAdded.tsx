@@ -115,11 +115,12 @@ const AutoCarousel = ({ models }: { models: any[] }) => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer || models.length === 0) return;
 
-    let scrollSpeed = 1;
+    let scrollSpeed = 0.5; // Slower, more elegant scroll
     let animationId: number;
+    let isScrolling = false;
 
     const scroll = () => {
-      if (scrollContainer) {
+      if (scrollContainer && !isScrolling) {
         scrollContainer.scrollLeft += scrollSpeed;
         
         // Reset to beginning when reaching the end for infinite scroll
@@ -130,20 +131,16 @@ const AutoCarousel = ({ models }: { models: any[] }) => {
       animationId = requestAnimationFrame(scroll);
     };
 
-    // Start auto-scroll after a delay
-    const startAutoScroll = () => {
-      animationId = requestAnimationFrame(scroll);
-    };
-
-    const timer = setTimeout(startAutoScroll, 2000);
+    // Start auto-scroll immediately
+    animationId = requestAnimationFrame(scroll);
 
     // Pause on hover
     const handleMouseEnter = () => {
-      cancelAnimationFrame(animationId);
+      isScrolling = true;
     };
 
     const handleMouseLeave = () => {
-      animationId = requestAnimationFrame(scroll);
+      isScrolling = false;
     };
 
     scrollContainer.addEventListener('mouseenter', handleMouseEnter);
@@ -151,7 +148,6 @@ const AutoCarousel = ({ models }: { models: any[] }) => {
 
     return () => {
       cancelAnimationFrame(animationId);
-      clearTimeout(timer);
       scrollContainer?.removeEventListener('mouseenter', handleMouseEnter);
       scrollContainer?.removeEventListener('mouseleave', handleMouseLeave);
     };
