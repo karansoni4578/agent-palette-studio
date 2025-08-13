@@ -25,12 +25,15 @@ export const useModelsAgents = (category?: string, limit?: number) => {
         setError(null);
 
         let query = supabase
-          .from('models_agents')
-          .select('*')
+          .from('agents')
+          .select(`
+            *,
+            categories!inner(name)
+          `)
           .order('created_at', { ascending: false });
 
         if (category) {
-          query = query.eq('category', category);
+          query = query.eq('categories.name', category);
         }
 
         if (limit) {
@@ -43,7 +46,20 @@ export const useModelsAgents = (category?: string, limit?: number) => {
           throw fetchError;
         }
 
-        setModels(data || []);
+        // Transform agents data to match ModelAgent interface
+        const transformedData: ModelAgent[] = (data || []).map((agent: any) => ({
+          id: agent.id,
+          name: agent.name,
+          description: agent.description || '',
+          category: agent.categories?.name || '',
+          logo_url: agent.logo_url || agent.image_url,
+          tags: agent.tags || [],
+          pricing_type: (agent.is_free ? 'Free' : 'Freemium') as 'Free' | 'Paid' | 'Freemium',
+          website_url: agent.link || '',
+          created_at: agent.created_at
+        }));
+        
+        setModels(transformedData);
       } catch (err) {
         console.error('Error fetching models/agents:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch models/agents');
