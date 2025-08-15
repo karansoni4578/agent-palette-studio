@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +16,8 @@ interface BlogPost {
   author: string;
   created_at: string;
   slug: string;
+  meta_title: string;
+  meta_description: string;
 }
 
 const BlogPost = () => {
@@ -34,7 +37,7 @@ const BlogPost = () => {
       // Try to fetch by slug first, then fallback to ID
       let { data, error } = await supabase
         .from('blog posts')
-        .select('*')
+        .select('id, title, content, image_url, tags, author, created_at, slug, meta_title, meta_description')
         .eq('slug', slug)
         .maybeSingle();
 
@@ -42,7 +45,7 @@ const BlogPost = () => {
         // Fallback to ID if slug doesn't work
         const { data: dataById, error: errorById } = await supabase
           .from('blog posts')
-          .select('*')
+          .select('id, title, content, image_url, tags, author, created_at, slug, meta_title, meta_description')
           .eq('id', slug)
           .maybeSingle();
         
@@ -76,6 +79,20 @@ const BlogPost = () => {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  const getMetaTitle = () => {
+    if (!blogPost) return "Blog Post";
+    return blogPost.meta_title || blogPost.title || "Blog Post";
+  };
+
+  const getMetaDescription = () => {
+    if (!blogPost) return "";
+    if (blogPost.meta_description) return blogPost.meta_description;
+    if (blogPost.content) {
+      return blogPost.content.substring(0, 150).replace(/\s+/g, ' ').trim() + '...';
+    }
+    return "";
   };
 
   if (loading) {
@@ -127,6 +144,38 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{getMetaTitle()}</title>
+        <meta name="description" content={getMetaDescription()} />
+        
+        {/* Open Graph tags */}
+        <meta property="og:title" content={getMetaTitle()} />
+        <meta property="og:description" content={getMetaDescription()} />
+        <meta property="og:type" content="article" />
+        {blogPost?.image_url && (
+          <meta property="og:image" content={blogPost.image_url} />
+        )}
+        <meta property="og:url" content={window.location.href} />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={getMetaTitle()} />
+        <meta name="twitter:description" content={getMetaDescription()} />
+        {blogPost?.image_url && (
+          <meta name="twitter:image" content={blogPost.image_url} />
+        )}
+        
+        {/* Article specific meta */}
+        {blogPost && (
+          <>
+            <meta property="article:author" content={blogPost.author || "Anonymous"} />
+            <meta property="article:published_time" content={blogPost.created_at} />
+            {blogPost.tags && (
+              <meta property="article:tag" content={blogPost.tags} />
+            )}
+          </>
+        )}
+      </Helmet>
       <Header />
       
       <article className="container mx-auto px-4 py-16">
