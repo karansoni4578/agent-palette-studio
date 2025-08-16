@@ -111,15 +111,14 @@ const AutoCarousel = ({ models }: { models: any[] }) => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer || models.length === 0) return;
 
-    let scrollSpeed = 0.5; // Slower, more elegant scroll
     let animationId: number;
-    let isScrolling = false;
+    const scrollSpeed = 1; // Consistent train-like speed
 
     const scroll = () => {
-      if (scrollContainer && !isScrolling) {
+      if (scrollContainer) {
         scrollContainer.scrollLeft += scrollSpeed;
         
-        // Reset to beginning when reaching the end for infinite scroll
+        // Reset to beginning when reaching halfway point for seamless infinite scroll
         if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
           scrollContainer.scrollLeft = 0;
         }
@@ -127,25 +126,13 @@ const AutoCarousel = ({ models }: { models: any[] }) => {
       animationId = requestAnimationFrame(scroll);
     };
 
-    // Start auto-scroll immediately
-    animationId = requestAnimationFrame(scroll);
-
-    // Pause on hover
-    const handleMouseEnter = () => {
-      isScrolling = true;
-    };
-
-    const handleMouseLeave = () => {
-      isScrolling = false;
-    };
-
-    scrollContainer.addEventListener('mouseenter', handleMouseEnter);
-    scrollContainer.addEventListener('mouseleave', handleMouseLeave);
+    // Start the scroll
+    scroll();
 
     return () => {
-      cancelAnimationFrame(animationId);
-      scrollContainer?.removeEventListener('mouseenter', handleMouseEnter);
-      scrollContainer?.removeEventListener('mouseleave', handleMouseLeave);
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
     };
   }, [models]);
 
@@ -223,19 +210,6 @@ const RecentlyAdded = () => {
           <AutoCarousel models={models} />
         )}
 
-        {/* Auto-scroll indicator */}
-        {!loading && !error && models.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1 }}
-            className="text-center mt-6"
-          >
-            <p className="text-muted-foreground text-sm">
-              ✨ Auto-scrolling • Hover to pause
-            </p>
-          </motion.div>
-        )}
 
         {/* Fallback when no models */}
         {!loading && !error && models.length === 0 && (
