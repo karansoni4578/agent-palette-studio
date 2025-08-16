@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase } from '@/integrations/supabase/client';
 import { ArrowLeft } from 'lucide-react';
+import DOMPurify from 'dompurify';
 
 const BlogPage = () => {
   const { slug } = useParams();
@@ -172,9 +173,15 @@ const BlogPage = () => {
 
         {/* Blog Content */}
         <article className="prose prose-lg max-w-none">
-          <div className="text-gray-800 leading-relaxed whitespace-pre-wrap">
-            {blog.content}
-          </div>
+          <div 
+            className="text-gray-800 leading-relaxed whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(blog.content, {
+                ALLOWED_TAGS: ['b', 'strong'],
+                ALLOWED_ATTR: []
+              })
+            }}
+          />
         </article>
 
         {/* Article Footer */}

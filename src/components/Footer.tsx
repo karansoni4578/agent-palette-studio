@@ -18,31 +18,12 @@ const Footer = () => {
               The premier platform for discovering, submitting, and sharing AI agents and tools. 
               Join our community of AI enthusiasts and developers.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                <Mail className="w-5 h-5" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Platform</h3>
             <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-primary transition-colors">
-                  Browse Agents
-                </a>
-              </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-primary transition-colors">
                   Categories
@@ -53,11 +34,6 @@ const Footer = () => {
                   Submit Agent
                 </a>
               </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-primary transition-colors">
-                  API Documentation
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -65,11 +41,6 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-primary transition-colors">
-                  Help Center
-                </a>
-              </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-primary transition-colors">
                   Contact Us
