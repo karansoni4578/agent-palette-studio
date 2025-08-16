@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowLeft, Calendar, User } from "lucide-react";
+import DOMPurify from "dompurify";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, ArrowLeft } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useParams, Link } from "react-router-dom";
 
 interface BlogPost {
   id: string;
@@ -224,9 +225,15 @@ const BlogPost = () => {
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
-            <div className="text-foreground leading-relaxed whitespace-pre-wrap">
-              {blogPost.content}
-            </div>
+            <div 
+              className="text-foreground leading-relaxed"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(blogPost.content, {
+                  ALLOWED_TAGS: ['b', 'strong', 'i', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'ul', 'ol', 'li', 'blockquote', 'a'],
+                  ALLOWED_ATTR: ['href', 'target', 'rel']
+                })
+              }}
+            />
           </div>
 
           {/* Article Footer */}
