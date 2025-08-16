@@ -174,11 +174,11 @@ const BlogPage = () => {
         {/* Blog Content */}
         <article className="prose prose-lg max-w-none">
           <div 
-            className="text-gray-800 leading-relaxed whitespace-pre-wrap"
+            className="text-gray-800 leading-relaxed"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(blog.content, {
-                ALLOWED_TAGS: ['b', 'strong'],
-                ALLOWED_ATTR: []
+                ALLOWED_TAGS: ['b', 'strong', 'i', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'ul', 'ol', 'li', 'blockquote', 'a'],
+                ALLOWED_ATTR: ['href', 'target', 'rel']
               })
             }}
           />
