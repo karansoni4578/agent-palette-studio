@@ -19,7 +19,7 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ scale: 1.02 }}
-      className="flex-shrink-0 w-[300px] bg-card rounded-2xl shadow-lg border border-border/50 p-6 ml-6 first:ml-6 last:mr-6 transition-transform duration-200 cursor-pointer hover:shadow-xl relative"
+      className="flex-shrink-0 w-[280px] sm:w-[300px] bg-card rounded-2xl shadow-lg border border-border/50 p-4 sm:p-6 ml-4 sm:ml-6 first:ml-4 sm:first:ml-6 last:mr-4 sm:last:mr-6 transition-transform duration-200 cursor-pointer hover:shadow-xl relative"
       style={{ scrollSnapAlign: 'start' }}
       onClick={handleClick}
     >
@@ -71,15 +71,11 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
         
         <div className="flex-1 min-w-0 pr-12">
           <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-bold text-foreground text-sm leading-tight">
+            <h3 className="font-bold text-foreground text-xs sm:text-sm leading-tight">
               {model.name}
             </h3>
           </div>
-          <p className="text-muted-foreground text-xs leading-relaxed overflow-hidden mb-3" style={{ 
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical' as const
-          }}>
+          <p className="text-muted-foreground text-xs leading-relaxed overflow-hidden mb-3 line-clamp-2">
             {model.description}
           </p>
           
@@ -227,21 +223,7 @@ const RecentlyAdded = () => {
           <AutoCarousel models={models} />
         )}
 
-        {/* Desktop Scroll Hint */}
-        {!loading && !error && models.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1 }}
-            className="text-center mt-6 hidden sm:block md:hidden"
-          >
-            <p className="text-muted-foreground text-sm">
-              Scroll horizontally to explore more →
-            </p>
-          </motion.div>
-        )}
-
-        {/* Mobile Scroll Hint */}
+        {/* Auto-scroll indicator */}
         {!loading && !error && models.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -250,7 +232,7 @@ const RecentlyAdded = () => {
             className="text-center mt-6"
           >
             <p className="text-muted-foreground text-sm">
-              Scroll horizontally to explore more →
+              ✨ Auto-scrolling • Hover to pause
             </p>
           </motion.div>
         )}
