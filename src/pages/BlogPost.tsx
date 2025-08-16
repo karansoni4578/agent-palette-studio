@@ -224,9 +224,9 @@ const BlogPost = () => {
           )}
 
           {/* Article Content */}
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg prose-slate dark:prose-invert max-w-none">
             <div 
-              className="text-foreground leading-relaxed"
+              className="blog-content"
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(blogPost.content, {
                   ALLOWED_TAGS: ['b', 'strong', 'i', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'ul', 'ol', 'li', 'blockquote', 'a'],

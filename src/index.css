@@ -2,6 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Blog content styling for professional spacing */
+.blog-content {
+  @apply text-foreground leading-relaxed;
+}
+
+.blog-content p {
+  @apply mb-6 text-base leading-7;
+}
+
+.blog-content h1 {
+  @apply text-3xl font-bold mb-6 mt-8 text-foreground;
+}
+
+.blog-content h2 {
+  @apply text-2xl font-semibold mb-5 mt-8 text-foreground;
+}
+
+.blog-content h3 {
+  @apply text-xl font-semibold mb-4 mt-6 text-foreground;
+}
+
+.blog-content h4 {
+  @apply text-lg font-medium mb-4 mt-6 text-foreground;
+}
+
+.blog-content h5 {
+  @apply text-base font-medium mb-3 mt-5 text-foreground;
+}
+
+.blog-content h6 {
+  @apply text-sm font-medium mb-3 mt-5 text-foreground;
+}
+
+.blog-content ul, .blog-content ol {
+  @apply mb-6 pl-6;
+}
+
+.blog-content li {
+  @apply mb-2 text-base leading-7;
+}
+
+.blog-content blockquote {
+  @apply border-l-4 border-primary pl-6 my-6 italic text-muted-foreground;
+}
+
+.blog-content a {
+  @apply text-primary hover:text-primary/80 underline transition-colors;
+}
+
+.blog-content strong, .blog-content b {
+  @apply font-semibold text-foreground;
+}
+
+.blog-content em, .blog-content i {
+  @apply italic;
+}
+
+.blog-content u {
+  @apply underline;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
