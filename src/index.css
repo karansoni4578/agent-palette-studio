@@ -173,17 +173,55 @@ All colors MUST be HSL.
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 
-  /* Global image handling - prevent cropping */
-  img:not([data-fit="cover"]) {
+  /* Content images auto-adjust (cards, blogs, posts) - prevent cropping */
+  .card img,
+  .blog-content img,
+  .post img,
+  .agent-card img,
+  .model-card img,
+  .blog-card img,
+  article img,
+  .content-image {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     object-position: center;
     max-width: 100%;
+    background-color: hsl(var(--muted));
+    display: block;
+  }
+
+  /* Exclude header/footer logos and icons from auto-adjustment */
+  header img,
+  footer img,
+  .navbar img,
+  .logo img,
+  .icon img,
+  nav img {
+    width: auto;
     height: auto;
+    object-fit: unset;
+    background: none;
+    max-width: none;
   }
 
   /* Allow opt-in cover behavior when explicitly needed */
   img[data-fit="cover"] { 
     object-fit: cover; 
+  }
+
+  /* Utility classes for explicit image control */
+  .img-contain { 
+    object-fit: contain !important; 
+    object-position: center !important;
+  }
+  
+  .img-cover { 
+    object-fit: cover !important; 
+  }
+  
+  .img-fill { 
+    object-fit: fill !important; 
   }
 
   /* For background-image blocks that were using bg-cover */
