@@ -23,11 +23,13 @@ const AgentDisplayCard = ({ agent }: AgentDisplayCardProps) => {
           {/* Logo */}
           <div className="flex-shrink-0">
             {agent.image_url ? (
-              <img 
-                src={agent.image_url} 
-                alt={`${agent.name} logo`}
-                className="w-16 h-16 object-cover rounded-lg border border-gray-200"
-              />
+              <div className="w-16 h-16 rounded-lg border border-gray-200 overflow-hidden bg-muted">
+                <img 
+                  src={agent.image_url} 
+                  alt={`${agent.name} logo`}
+                  className="w-full h-full object-contain"
+                />
+              </div>
             ) : (
               <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center border border-gray-200">
                 <span className="text-orange-600 font-bold text-xl">

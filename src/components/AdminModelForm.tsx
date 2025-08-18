@@ -249,7 +249,7 @@ const AdminModelForm = () => {
             </Button>
             {imagePreview && (
               <div className="mt-4">
-                <img src={imagePreview} alt="Preview" className="w-32 h-32 object-cover rounded-lg" />
+                <img src={imagePreview} alt="Preview" className="w-32 h-32 object-contain rounded-lg bg-muted border" />
               </div>
             )}
           </div>

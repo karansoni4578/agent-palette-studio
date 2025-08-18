@@ -99,7 +99,7 @@ const Blogs = () => {
                 <img 
                   src={blogPosts[0].image_url || "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop"} 
                   alt={blogPosts[0].title}
-                  className="w-full h-64 md:h-full object-cover"
+                  className="w-full h-64 md:h-full object-contain bg-muted"
                 />
               </div>
               <div className="md:w-1/2 p-8">
@@ -141,7 +141,7 @@ const Blogs = () => {
                 <img 
                   src={post.image_url || "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop"} 
                   alt={post.title}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-300 bg-muted"
                 />
               </div>
               <CardHeader>

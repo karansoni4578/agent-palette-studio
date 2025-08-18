@@ -49,7 +49,7 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
               <img
                 src={model.logo_url}
                 alt={model.name}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                className={`w-full h-full object-contain transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'
                 }`}
                 onLoad={() => setImageLoaded(true)}

@@ -333,7 +333,7 @@ const AgentSubmissionForm = ({ onAgentAdded }: AgentSubmissionFormProps) => {
               </Button>
               {imagePreview && (
                 <div className="mt-4">
-                  <img src={imagePreview} alt="Preview" className="w-32 h-32 object-cover rounded-lg border border-gray-200" />
+                  <img src={imagePreview} alt="Preview" className="w-32 h-32 object-contain rounded-lg border border-gray-200 bg-muted" />
                 </div>
               )}
             </div>

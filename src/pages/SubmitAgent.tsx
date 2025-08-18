@@ -178,7 +178,7 @@ const SubmitAgent = () => {
                           <img 
                             src={uploadedImage} 
                             alt="Uploaded logo" 
-                            className="w-24 h-24 object-cover rounded-lg mb-2"
+                            className="w-24 h-24 object-contain rounded-lg mb-2 bg-muted border"
                           />
                           <p className="text-sm text-gray-600">Logo uploaded successfully</p>
                         </div>

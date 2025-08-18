@@ -40,7 +40,7 @@ const ModelAgentCard: React.FC<ModelAgentCardProps> = ({ model, className = "" }
           <img 
             src={model.logo_url} 
             alt={model.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
