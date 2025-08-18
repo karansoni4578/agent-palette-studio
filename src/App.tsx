@@ -35,50 +35,56 @@ import SubmitAgentPage from "./pages/SubmitAgentPage";
 
 const queryClient = new QueryClient();
 
-const App = () => {
+const AppContent = () => {
   useAnalytics();
   
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/submit" element={<SubmitAgent />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/categories" element={<ExploreCategories />} />
-          <Route path="/category/chat" element={<ChatCategory />} />
-          <Route path="/category/writing" element={<WritingCategory />} />
-          <Route path="/category/image-design" element={<ImageDesignCategory />} />
-          <Route path="/category/coding" element={<CodingCategory />} />
-          <Route path="/category/productivity" element={<ProductivityCategory />} />
-          <Route path="/category/voice-audio" element={<VoiceAudioCategory />} />
-          <Route path="/category/video-animation" element={<VideoAnimationCategory />} />
-          <Route path="/category/data-analytics" element={<DataAnalyticsCategory />} />
-          <Route path="/category/finance-crypto" element={<FinanceCryptoCategory />} />
-          <Route path="/category/education-learning" element={<EducationLearningCategory />} />
-          <Route path="/category/marketing-seo" element={<MarketingSEOCategory />} />
-          <Route path="/category/healthcare-wellness" element={<HealthcareWellnessCategory />} />
-          <Route path="/category/developer-apis" element={<DeveloperAPIsCategory />} />
-          <Route path="/category/security-legal" element={<SecurityLegalCategory />} />
-          <Route path="/category/experimental-research" element={<ExperimentalResearchCategory />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/submit-agent" element={<SubmitAgentPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/submit" element={<SubmitAgent />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/categories" element={<ExploreCategories />} />
+        <Route path="/category/chat" element={<ChatCategory />} />
+        <Route path="/category/writing" element={<WritingCategory />} />
+        <Route path="/category/image-design" element={<ImageDesignCategory />} />
+        <Route path="/category/coding" element={<CodingCategory />} />
+        <Route path="/category/productivity" element={<ProductivityCategory />} />
+        <Route path="/category/voice-audio" element={<VoiceAudioCategory />} />
+        <Route path="/category/video-animation" element={<VideoAnimationCategory />} />
+        <Route path="/category/data-analytics" element={<DataAnalyticsCategory />} />
+        <Route path="/category/finance-crypto" element={<FinanceCryptoCategory />} />
+        <Route path="/category/education-learning" element={<EducationLearningCategory />} />
+        <Route path="/category/marketing-seo" element={<MarketingSEOCategory />} />
+        <Route path="/category/healthcare-wellness" element={<HealthcareWellnessCategory />} />
+        <Route path="/category/developer-apis" element={<DeveloperAPIsCategory />} />
+        <Route path="/category/security-legal" element={<SecurityLegalCategory />} />
+        <Route path="/category/experimental-research" element={<ExperimentalResearchCategory />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/submit-agent" element={<SubmitAgentPage />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
+};
+
+const App = () => (
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <AppContent />
       </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   </HelmetProvider>
-  );
-};
+);
 
 export default App;
