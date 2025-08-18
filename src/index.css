@@ -125,41 +125,48 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Custom dark mode with brand orange accents */
+    --background: 0 0% 6%; /* #0F0F0F base for gradient */
+    --foreground: 0 0% 100%; /* #FFFFFF for headings */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 9%; /* #181818 for card backgrounds */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 25 95% 53%; /* #FF8C42 orange accent for buttons/links */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 12%; /* #202020 for search bars and inputs */
+    --secondary-foreground: 0 0% 81%; /* #CFCFCF for paragraph text */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 9%; /* #181818 for muted backgrounds */
+    --muted-foreground: 0 0% 81%; /* #CFCFCF for muted text */
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 25 95% 53%; /* Orange accent for highlights */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --border: 0 0% 100% / 0.08; /* rgba(255,255,255,0.08) subtle borders */
+    --input: 0 0% 12%; /* #202020 for input backgrounds */
+    --ring: 25 95% 53%; /* Orange focus rings */
+
+    /* Dark mode gradients and effects */
+    --dark-gradient-bg: linear-gradient(135deg, #0F0F0F, #1A1A1A, #202020);
+    --orange-gradient: linear-gradient(135deg, #FF8C42, #FF5F6D);
+    --hover-glow: 0 4px 20px rgba(255, 140, 66, 0.3);
+
+    --sidebar-background: 0 0% 9%;
+    --sidebar-foreground: 0 0% 81%;
+    --sidebar-primary: 25 95% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 81%;
+    --sidebar-border: 0 0% 100% / 0.08;
+    --sidebar-ring: 25 95% 53%;
   }
 }
 
@@ -171,6 +178,12 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Dark mode background gradient */
+  .dark body {
+    background: var(--dark-gradient-bg);
   }
 
   /* Content images auto-adjust (cards, blogs, posts) - prevent cropping */
@@ -285,5 +298,33 @@ All colors MUST be HSL.
   
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Dark mode specific utilities */
+  .dark .hover-glow {
+    transition: all 0.3s ease;
+  }
+  
+  .dark .hover-glow:hover {
+    box-shadow: var(--hover-glow);
+    transform: translateY(-2px);
+  }
+  
+  .dark .orange-gradient-text {
+    background: var(--orange-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .dark .orange-gradient-bg {
+    background: var(--orange-gradient);
+  }
+
+  /* Enhanced glassmorphism for dark mode navbar */
+  .dark .glass-nav {
+    background: rgba(24, 24, 24, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 }
