@@ -4,6 +4,7 @@ import { ChevronDown, Search, Menu } from "lucide-react";
 import { useState } from "react";
 import SearchModal from "./SearchModal";
 import { useIsMobile } from "@/hooks/use-mobile";
+import ThemeToggle from "./ThemeToggle";
 // Logo will be referenced directly from uploads
 
 const Header = () => {
@@ -107,6 +108,9 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-2 md:space-x-3">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             {/* Search Button - Always visible */}
             <Button 
               variant="ghost" 

@@ -160,12 +160,7 @@ const RecentlyAdded = () => {
             opts={{
               loop: true,
             }}
-            plugins={[
-              Autoplay({
-                delay: 2000, // 2 seconds autoplay
-                stopOnInteraction: false,
-              }),
-            ]}
+            plugins={[]}
           >
             <CarouselContent>
               {models.map((model, index) => (
