@@ -86,7 +86,7 @@ const LatestBlogs = () => {
     return null;
   }
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-accent/10">
+    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-accent/10 dark:bg-muted/50 max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Title */}
         <motion.div 

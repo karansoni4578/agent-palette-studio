@@ -26,7 +26,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background max-w-full overflow-x-hidden">
       <Header />
       <Hero />
       <BrowseCategories />
@@ -35,11 +35,11 @@ const Index = () => {
       <LatestBlogs />
       
       {/* Submit Tool CTA Section */}
-      <section className="py-16 bg-[#FFF7ED]">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-secondary dark:bg-muted">
+        <div className="container mx-auto px-4 max-w-full">
           <div className="text-center">
             <div 
-              className="inline-flex items-center bg-[#F97316] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#EA580C] transition-colors duration-300 cursor-pointer text-lg"
+              className="inline-flex items-center bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-xl font-semibold transition-colors duration-300 cursor-pointer text-lg dark:orange-gradient-bg dark:hover-glow"
               onClick={() => window.location.href = '/submit'}
             >
               <span style={{ fontFamily: 'Poppins, sans-serif' }}>

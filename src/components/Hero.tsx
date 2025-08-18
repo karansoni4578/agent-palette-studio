@@ -12,7 +12,7 @@ const Hero = () => {
 
   return (
     <>
-      <section className="container mx-auto px-4 py-8 md:py-16 text-center">
+      <section className="container mx-auto px-4 py-8 md:py-16 text-center max-w-full">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-foreground mb-4 leading-tight">
             Discover Amazing{" "}

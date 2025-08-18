@@ -218,29 +218,29 @@ const TrendingAgents = () => {
   };
 
   return (
-    <section className="py-16 bg-[#FFF7ED]">
-      <div className="container mx-auto px-4">
+    <section className="py-16 bg-secondary dark:bg-card/30">
+      <div className="container mx-auto px-4 max-w-full">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12">
           <div className="mb-6 lg:mb-0">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#111827] mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
               🔥 Trending AI Agents & Models
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <p className="text-lg text-muted-foreground max-w-2xl" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Most used, most loved — explore what's trending this week
             </p>
           </div>
           
           {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 max-w-full">
             {filters.map((filter) => (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
                 className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
                   activeFilter === filter
-                    ? 'bg-[#F97316] text-white shadow-md'
-                    : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
+                    ? 'bg-primary text-primary-foreground shadow-md dark:orange-gradient-bg dark:hover-glow'
+                    : 'bg-card text-foreground hover:bg-primary/10 border border-border'
                 }`}
                 style={{ fontFamily: 'Poppins, sans-serif' }}
               >
@@ -251,23 +251,23 @@ const TrendingAgents = () => {
         </div>
 
         {/* Agents Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 max-w-full">
           {visibleAgents.map((agent) => (
             <div
               key={agent.id}
-              className="group bg-white rounded-2xl p-6 border border-gray-200 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="group bg-card rounded-2xl p-6 border border-border cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg dark:hover-glow"
               onClick={() => handleToolClick(agent.link)}
             >
               {/* Agent Header */}
               <div className="mb-4">
-                <h3 className="text-xl font-bold text-[#111827] mb-2 group-hover:text-[#F97316] transition-colors duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300" style={{ fontFamily: 'Poppins, sans-serif' }}>
                   {agent.name}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-3">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                   {agent.description}
                 </p>
-                <div className="flex items-center text-sm text-gray-500 mb-3">
-                  <span className="text-[#F97316] mr-1">🔹</span>
+                <div className="flex items-center text-sm text-muted-foreground mb-3">
+                  <span className="text-primary mr-1">🔹</span>
                   <span className="font-medium">{agent.users} users</span>
                 </div>
               </div>
@@ -277,7 +277,7 @@ const TrendingAgents = () => {
                 {agent.tags.slice(0, 3).map((tag) => (
                   <Badge 
                     key={tag} 
-                    className="bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs px-2 py-1"
+                    className="bg-primary/10 text-primary hover:bg-primary/20 text-xs px-2 py-1"
                   >
                     {tag}
                   </Badge>
@@ -286,7 +286,7 @@ const TrendingAgents = () => {
 
               {/* Visit Button */}
               <Button
-                className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all duration-300 flex items-center justify-center gap-2 dark:orange-gradient-bg dark:hover-glow"
                 style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 Visit Tool
@@ -301,7 +301,7 @@ const TrendingAgents = () => {
           <div className="text-center mb-8">
             <Button
               onClick={() => setShowMore(true)}
-              className="bg-white border-2 border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300"
+              className="bg-card border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 rounded-xl font-semibold transition-all duration-300 dark:hover-glow"
               style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               Load More ({filteredAgents.length - 10} more)

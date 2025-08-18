@@ -106,14 +106,14 @@ const BrowseCategories = () => {
   const handleLoadMore = () => {
     setShowAll(true);
   };
-  return <section className="py-16 bg-[#FFF7ED]">
-      <div className="container mx-auto px-4">
+  return <section className="py-16 bg-secondary dark:bg-background">
+      <div className="container mx-auto px-4 max-w-full">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#111827] mb-4" style={{
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" style={{
           fontFamily: 'Poppins, sans-serif'
         }}>→ Explore AI Categories</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto" style={{
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto" style={{
           fontFamily: 'Poppins, sans-serif'
         }}>
             Discover AI tools organized by use case and functionality
@@ -121,33 +121,33 @@ const BrowseCategories = () => {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 mb-8 max-w-full">
           {visibleCategories.map((category, index) => {
           const IconComponent = category.icon;
           const isNewlyVisible = showAll && index >= initialCount;
-          return <div key={category.name} className={`group bg-white rounded-2xl p-6 border border-gray-200 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg ${isNewlyVisible ? 'animate-fade-in-up' : ''}`} onClick={() => handleCategoryClick(category.route)} style={{
+          return <div key={category.name} className={`group bg-card rounded-2xl p-6 border border-border cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg dark:hover-glow ${isNewlyVisible ? 'animate-fade-in-up' : ''}`} onClick={() => handleCategoryClick(category.route)} style={{
             animationDelay: isNewlyVisible ? `${(index - initialCount) * 100}ms` : '0ms'
           }}>
                 {/* Icon */}
                 <div className="mb-4 flex justify-center">
-                  <div className="p-3 rounded-xl bg-[#F97316]/10 group-hover:bg-[#F97316]/20 transition-colors duration-300">
-                    <IconComponent className="w-6 h-6 text-[#F97316] group-hover:scale-110 transition-transform duration-300" />
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
+                    <IconComponent className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
                   </div>
                 </div>
                 
                 {/* Content */}
                 <div className="text-center">
-                  <h3 className="text-lg font-bold text-[#111827] mb-2 group-hover:text-[#F97316] transition-colors duration-300" style={{
+                  <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300" style={{
                 fontFamily: 'Poppins, sans-serif'
               }}>
                     {category.name}
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     {category.description}
                   </p>
                   
                   {/* Hover underline effect */}
-                  <div className="mt-3 h-0.5 bg-[#F97316] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></div>
+                  <div className="mt-3 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></div>
                 </div>
               </div>;
         })}
@@ -155,7 +155,7 @@ const BrowseCategories = () => {
 
         {/* Load More Button */}
         {hasMore && !showAll && <div className="text-center">
-            <Button onClick={handleLoadMore} className="bg-[#F97316] hover:bg-[#EA580C] text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105" style={{
+            <Button onClick={handleLoadMore} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 dark:orange-gradient-bg" style={{
           fontFamily: 'Poppins, sans-serif'
         }}>
               Load More Categories

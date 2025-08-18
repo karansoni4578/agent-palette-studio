@@ -119,7 +119,7 @@ const RecentlyAdded = () => {
 
   return (
     <section className="py-16 bg-background">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 max-w-full">
         {/* Section Header */}
         <div className="text-center mb-12">
           <motion.div
