@@ -66,7 +66,7 @@ const Header = () => {
             <img 
               src="/lovable-uploads/3be4ca71-2849-4870-8b9b-226aed931d60.png" 
               alt="AI Agent Zone" 
-              className="h-10 md:h-14 w-auto" 
+              className="h-10 md:h-10 w-auto" 
             />
             <div className="text-lg md:text-3xl font-bold">
               <span className="text-foreground">AI Agent</span>
