@@ -62,8 +62,8 @@ const Header = () => {
       {/* Navigation */}
       <nav className="container mx-auto px-4 py-3 md:py-4">
         <div className="flex items-center justify-between">
-          {/* Logo and Brand Name */}
-          <div className="flex items-center space-x-2 md:space-x-3">
+          {/* Logo and Brand Name - Home Button */}
+          <a href="/" className="flex items-center space-x-2 md:space-x-3 hover:opacity-80 transition-opacity cursor-pointer">
             <img 
               src="/lovable-uploads/3be4ca71-2849-4870-8b9b-226aed931d60.png" 
               alt="AI Agent Zone" 
@@ -73,7 +73,7 @@ const Header = () => {
               <span className="text-foreground">AI Agent</span>
               <span className="text-primary ml-1">Zone</span>
             </div>
-          </div>
+          </a>
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
