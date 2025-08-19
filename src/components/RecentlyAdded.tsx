@@ -117,6 +117,11 @@ const ModelCard = ({ model, index }: { model: any; index: number }) => {
 const RecentlyAdded = () => {
   const { models, loading, error } = useRecentModelsAgents(10);
 
+  // autoplay plugin reference
+  const autoplay = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: false })
+  );
+
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4 max-w-full">
@@ -160,7 +165,9 @@ const RecentlyAdded = () => {
             opts={{
               loop: true,
             }}
-            plugins={[]}
+            plugins={[autoplay.current]}
+            onMouseEnter={autoplay.current.stop}
+            onMouseLeave={autoplay.current.reset}
           >
             <CarouselContent>
               {models.map((model, index) => (
