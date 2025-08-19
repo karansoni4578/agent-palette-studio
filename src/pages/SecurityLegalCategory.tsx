@@ -2,10 +2,11 @@ import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CategoryModelsGrid from '@/components/CategoryModelsGrid';
+import FloatingActionButton from '@/components/FloatingActionButton';
 
 const SecurityLegalCategory = () => {
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <Header />
       <CategoryModelsGrid 
         category="Security & Legal"
@@ -13,7 +14,8 @@ const SecurityLegalCategory = () => {
         description="AI-powered security and legal tools to protect your business and ensure compliance. Enhance cybersecurity and streamline legal processes."
       />
       <Footer />
-    </>
+      <FloatingActionButton />
+    </div>
   );
 };
 

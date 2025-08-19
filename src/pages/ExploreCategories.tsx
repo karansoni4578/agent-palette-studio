@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FloatingActionButton from "@/components/FloatingActionButton";
 
 const categories = [
   {
@@ -121,7 +122,7 @@ const ExploreCategories = () => {
   };
 
   return (
-    <div className="min-h-screen bg-warm-bg">
+    <div className="min-h-screen bg-background">
       <Header />
       
       <main className="container mx-auto px-4 py-16">
@@ -177,6 +178,7 @@ const ExploreCategories = () => {
       </main>
 
       <Footer />
+      <FloatingActionButton />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Upload, Zap, Users, Globe } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FloatingActionButton from "@/components/FloatingActionButton";
 
 const formSchema = z.object({
   agentName: z.string().min(1, "Agent name is required"),
@@ -76,46 +77,47 @@ const SubmitAgent = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-[#FFF7ED]">
+      <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-2xl mx-auto text-center">
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-[#111827] mb-4">Thank You!</h1>
-            <p className="text-lg text-gray-600 mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-4">Thank You!</h1>
+            <p className="text-lg text-muted-foreground mb-8">
               Your AI agent has been submitted successfully. We'll review it and get back to you within 2-3 business days.
             </p>
             <Button 
               onClick={() => setIsSubmitted(false)}
-              className="bg-[#F97316] hover:bg-[#EA580C] text-white"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               Submit Another Agent
             </Button>
           </div>
         </div>
         <Footer />
+        <FloatingActionButton />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FFF7ED]">
+    <div className="min-h-screen bg-background">
       <Header />
       
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto">
           {/* Page Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-[#111827] mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <h1 className="text-4xl font-bold text-foreground mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Submit a New AI Agent
             </h1>
-            <p className="text-lg text-gray-600" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <p className="text-lg text-muted-foreground" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Fill the form below to share your AI agent with the world.
             </p>
           </div>
 
           {/* Form Card */}
-          <Card className="bg-white shadow-lg rounded-2xl">
+          <Card className="bg-card shadow-lg rounded-2xl">
             <CardContent className="p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Agent Name */}
@@ -335,6 +337,7 @@ const SubmitAgent = () => {
       </div>
 
       <Footer />
+      <FloatingActionButton />
     </div>
   );
 };
