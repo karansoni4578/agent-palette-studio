@@ -32,7 +32,7 @@ const CategoryModelsGrid: React.FC<CategoryModelsGridProps> = ({
   const LoadingSkeleton = () => (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="bg-white rounded-2xl p-6 border border-gray-200">
+        <div key={i} className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex justify-between items-start mb-4">
             <Skeleton className="h-4 w-24" />
             <Skeleton className="h-6 w-16" />
@@ -51,7 +51,7 @@ const CategoryModelsGrid: React.FC<CategoryModelsGridProps> = ({
   );
 
   return (
-    <div className="min-h-screen bg-[#FDF4E3]">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
         <motion.div 
@@ -60,12 +60,12 @@ const CategoryModelsGrid: React.FC<CategoryModelsGridProps> = ({
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-[#111827] mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
             {title}
           </h1>
-          <div className="w-24 h-1 bg-[#F97316] mx-auto rounded-full mb-4"></div>
+          <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-4"></div>
           {description && (
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto" style={{ fontFamily: 'Poppins, sans-serif' }}>
               {description}
             </p>
           )}
@@ -81,7 +81,7 @@ const CategoryModelsGrid: React.FC<CategoryModelsGridProps> = ({
           <div className="max-w-2xl mx-auto space-y-4">
             {/* Search Bar */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <Input
                 placeholder="Search models and agents..."
                 value={searchTerm}
@@ -115,7 +115,7 @@ const CategoryModelsGrid: React.FC<CategoryModelsGridProps> = ({
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mb-8"
           >
-            <p className="text-gray-600 text-center">
+            <p className="text-muted-foreground text-center">
               {filteredModels.length} {filteredModels.length === 1 ? 'result' : 'results'} found
             </p>
           </motion.div>
@@ -127,7 +127,7 @@ const CategoryModelsGrid: React.FC<CategoryModelsGridProps> = ({
         {/* Error State */}
         {error && (
           <div className="text-center py-16">
-            <p className="text-gray-600">Unable to load models at the moment. Please try again later.</p>
+            <p className="text-muted-foreground">Unable to load models at the moment. Please try again later.</p>
           </div>
         )}
 
@@ -155,14 +155,14 @@ const CategoryModelsGrid: React.FC<CategoryModelsGridProps> = ({
         {/* No Results */}
         {!loading && !error && filteredModels.length === 0 && models.length > 0 && (
           <div className="text-center py-16">
-            <p className="text-gray-600">No models match your search criteria.</p>
+            <p className="text-muted-foreground">No models match your search criteria.</p>
           </div>
         )}
 
         {/* No Models in Category */}
         {!loading && !error && models.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-gray-600">No models available in this category yet.</p>
+            <p className="text-muted-foreground">No models available in this category yet.</p>
           </div>
         )}
       </div>
