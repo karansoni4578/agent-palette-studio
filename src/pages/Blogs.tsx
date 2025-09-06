@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+import { getCleanExcerpt } from "@/lib/utils";
 
 interface BlogPost {
   id: string;
@@ -55,10 +56,6 @@ const Blogs = () => {
     });
   };
 
-  const getExcerpt = (content: string, maxLength: number = 150) => {
-    if (!content) return "";
-    return content.length > maxLength ? content.substring(0, maxLength) + "..." : content;
-  };
 
   if (loading) {
     return (
@@ -113,7 +110,7 @@ const Blogs = () => {
                   </h2>
                 </Link>
                 <p className="text-muted-foreground mb-6">
-                  {getExcerpt(blogPosts[0].content)}
+                  {getCleanExcerpt(blogPosts[0].content)}
                 </p>
                 <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
@@ -157,7 +154,7 @@ const Blogs = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                  {getExcerpt(post.content)}
+                  {getCleanExcerpt(post.content)}
                 </p>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center space-x-1">
