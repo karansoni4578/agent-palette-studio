@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRecentModelsAgents } from "@/hooks/useModelsAgents";
 import { ExternalLink } from "lucide-react";
-import Autoplay from "embla-carousel-autoplay";
+
 
 import {
   Carousel,
