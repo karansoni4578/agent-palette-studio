@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
@@ -20,8 +20,8 @@ export type Database = {
           created_at: string | null
           description: string | null
           id: string
-          image_url: string | null
           is_free: boolean | null
+          is_trending: boolean
           link: string | null
           logo_url: string | null
           name: string
@@ -32,8 +32,8 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           id?: string
-          image_url?: string | null
           is_free?: boolean | null
+          is_trending?: boolean
           link?: string | null
           logo_url?: string | null
           name: string
@@ -44,8 +44,8 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           id?: string
-          image_url?: string | null
           is_free?: boolean | null
+          is_trending?: boolean
           link?: string | null
           logo_url?: string | null
           name?: string
@@ -68,6 +68,8 @@ export type Database = {
           created_at: string
           id: string
           image_url: string | null
+          meta_description: string | null
+          meta_title: string | null
           slug: string | null
           tags: string | null
           title: string | null
@@ -78,6 +80,8 @@ export type Database = {
           created_at?: string
           id?: string
           image_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
           slug?: string | null
           tags?: string | null
           title?: string | null
@@ -88,6 +92,8 @@ export type Database = {
           created_at?: string
           id?: string
           image_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
           slug?: string | null
           tags?: string | null
           title?: string | null
@@ -114,7 +120,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_trending_agents: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
