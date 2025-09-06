@@ -1,4 +1,4 @@
 project_id = "casroknzdishifjrwkit"
 
-[functions.update-trending-agents]
+[functions.update-trending]
 verify_jwt = false

@@ -5,9 +5,9 @@ export interface TrendingAgent {
   id: string;
   name: string;
   description: string;
-  link: string;
-  logo_url: string;
-  tags: string[];
+  logo_url?: string;
+  link?: string;
+  tags?: string[];
   is_free: boolean;
   created_at: string;
 }
@@ -21,8 +21,6 @@ export const useTrendingAgents = () => {
     const fetchTrendingAgents = async () => {
       try {
         setLoading(true);
-        setError(null);
-
         const { data, error } = await supabase
           .from('agents')
           .select('*')
@@ -31,15 +29,12 @@ export const useTrendingAgents = () => {
           .limit(12);
 
         if (error) {
-          console.error('Error fetching trending agents:', error);
-          setError('Failed to load trending agents');
-          return;
+          setError(error.message);
+        } else {
+          setAgents(data || []);
         }
-
-        setAgents(data || []);
       } catch (err) {
-        console.error('Error:', err);
-        setError('Failed to load trending agents');
+        setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
         setLoading(false);
       }
